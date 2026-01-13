@@ -23,7 +23,7 @@ jobs:
         run: |
           echo "Cleaning up caches for closed branches and old PRs..."
           
-          # Get list of all caches
+          # Get list of all caches older than 7 days (604800 seconds)
           gh api repos/${{ github.repository }}/actions/caches \
             --paginate \
             --jq '.actions_caches[] | select(.created_at < (now - 604800 | strftime("%Y-%m-%dT%H:%M:%SZ"))) | .id' \

@@ -12,7 +12,8 @@ const path = require('path');
 const { execSync } = require('child_process');
 
 console.log('🔍 Vercel Repository Performance Analysis\n');
-console.log('=' .repeat(60));
+const DIVIDER = '='.repeat(60);
+console.log(DIVIDER);
 
 // 1. Check for duplicate dependencies across workspace
 console.log('\n📦 Checking for duplicate dependencies...');
@@ -78,11 +79,11 @@ console.log('3. ✅ GitHub Actions workflows have explicit timeouts');
 console.log('4. ✅ Network optimizations are configured in .npmrc');
 console.log('');
 console.log('Additional recommendations:');
-console.log('  - Regularly run: pnpm dedupe to optimize dependencies');
+console.log('  - Regularly run: pnpm run dedupe to optimize dependencies');
 console.log('  - Monitor GitHub Actions cache hit rates');
 console.log('  - Review Turbo Remote Cache analytics periodically');
 console.log('  - Consider using GitHub Actions cache cleanup for old branches');
 console.log('');
 
-console.log('=' .repeat(60));
+console.log(DIVIDER);
 console.log('\n✨ Analysis complete!\n');
