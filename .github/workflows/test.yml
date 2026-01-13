@@ -17,6 +17,7 @@ jobs:
   setup:
     name: Find Changes
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     if: github.event_name == 'pull_request' && github.event.pull_request.title != 'Version Packages'
     outputs:
       tests: ${{ steps['set-tests'].outputs['tests'] }}
@@ -36,6 +37,17 @@ jobs:
           node-version: 22
       - name: install pnpm@8.3.1
         run: npm i -g pnpm@8.3.1
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
       - run: pnpm install
       - id: affected-packages
         run: |
@@ -94,6 +106,7 @@ jobs:
   comment-test-strategy:
     name: Comment Test Strategy
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     if: github.event_name == 'pull_request' && github.event.pull_request.title != 'Version Packages'
     needs:
       - setup
@@ -238,6 +251,20 @@ jobs:
 
       - name: install pnpm@8.3.1
         run: npm i -g pnpm@8.3.1
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ matrix.nodeVersion }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-${{ matrix.nodeVersion }}-
+            ${{ runner.os }}-pnpm-store-
 
       - run: pnpm install
 
