@@ -49,6 +49,7 @@ jobs:
 
   lint:
     name: Lint
+    # Increased timeout because this job runs lint, prettier, build and type-check, which can be slow on large changes.
     timeout-minutes: 20
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.pull_request.title != 'Version Packages'
