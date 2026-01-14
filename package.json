@@ -55,7 +55,9 @@
     "pack": "cd utils && node -r ts-eager/register ./pack.ts",
     "ci:version": "changeset version && pnpm install --no-frozen-lockfile",
     "ci:publish": "pnpm publish -r && node utils/update-canary-tags.mjs && changeset tag",
-    "type-check": "turbo type-check --concurrency=12 --output-logs=errors-only --summarize --continue"
+    "type-check": "turbo type-check --concurrency=12 --output-logs=errors-only --summarize --continue",
+    "analyze-performance": "node scripts/analyze-performance.js",
+    "dedupe": "pnpm dedupe"
   },
   "lint-staged": {
     "./{*,{api,internals,packages,test,utils}/**/*}.{js,ts}": [

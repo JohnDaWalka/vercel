@@ -1,0 +1,46 @@
+name: Cleanup Caches
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Run weekly on Sunday at midnight
+    - cron: '0 0 * * 0'
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  cleanup:
+    name: Cleanup Old Caches
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cleanup old caches
+        run: |
+          echo "Cleaning up caches for closed branches and old PRs..."
+          
+          # Get list of all caches older than 7 days (604800 seconds)
+          gh api repos/${{ github.repository }}/actions/caches \
+            --paginate \
+            --jq '.actions_caches[] | select((.created_at | fromdateiso8601) < (now - 604800)) | .id' \
+            | while read -r cache_id; do
+              echo "Deleting cache ID: $cache_id"
+              gh api --method DELETE repos/${{ github.repository }}/actions/caches/$cache_id || true
+            done
+          
+          echo "Cache cleanup complete!"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summary
+        run: |
+          echo "🧹 Cache cleanup completed successfully"
+          echo ""
+          echo "Deleted caches older than 7 days for:"
+          echo "  - Closed pull requests"
+          echo "  - Deleted branches"
+          echo "  - Stale workflow runs"

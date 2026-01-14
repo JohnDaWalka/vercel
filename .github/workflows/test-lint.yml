@@ -17,6 +17,7 @@ jobs:
   enforce-changeset:
     name: Enforce Changeset
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     if: github.event_name == 'pull_request' && github.event.pull_request.title != 'Version Packages'
     steps:
       - uses: actions/checkout@v4
@@ -26,15 +27,30 @@ jobs:
           token: ${{ secrets.GH_TOKEN_PULL_REQUESTS }}
       - run: git fetch origin ${{ github.event.pull_request.head.sha }}:pr-${{ github.event.pull_request.number }}
       - run: git checkout pr-${{ github.event.pull_request.number }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
       - name: install pnpm@8.3.1
         run: npm i -g pnpm@8.3.1
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
       - run: pnpm install
       # Enforce a changeset file to be present
       - run: pnpm exec changeset status --since=main
 
   lint:
     name: Lint
-    timeout-minutes: 10
+    # Increased timeout because this job runs lint, prettier, build and type-check, which can be slow on large changes.
+    timeout-minutes: 20
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request' && github.event.pull_request.title != 'Version Packages'
     steps:
@@ -44,6 +60,17 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: install pnpm@8.3.1
         run: npm i -g pnpm@8.3.1
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+      - uses: actions/cache@v4
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
       - run: pnpm install
       - run: pnpm run lint
       - run: pnpm run prettier-check
