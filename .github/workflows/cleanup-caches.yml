@@ -26,7 +26,7 @@ jobs:
           # Get list of all caches older than 7 days (604800 seconds)
           gh api repos/${{ github.repository }}/actions/caches \
             --paginate \
-            --jq '.actions_caches[] | select(.created_at < (now - 604800 | strftime("%Y-%m-%dT%H:%M:%SZ"))) | .id' \
+            --jq '.actions_caches[] | select((.created_at | fromdateiso8601) < (now - 604800)) | .id' \
             | while read -r cache_id; do
               echo "Deleting cache ID: $cache_id"
               gh api --method DELETE repos/${{ github.repository }}/actions/caches/$cache_id || true
