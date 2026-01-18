@@ -17,7 +17,7 @@ console.log(DIVIDER);
 // 1. Check for duplicate dependencies across workspace
 console.log('\n📦 Checking for duplicate dependencies...');
 try {
-  const result = execSync('pnpm list --depth=0 --json', { 
+  execSync('pnpm list --depth=0 --json', { 
     encoding: 'utf8',
     stdio: ['pipe', 'pipe', 'ignore']
   });
