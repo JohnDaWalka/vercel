@@ -54,10 +54,13 @@ async function createDeploymentProtectionToken(
     );
 
     output.note(
-      'To bypass deployment protection, create a "Protection Bypass for Automation" secret in your project settings:'
+      'To bypass deployment protection, create a "Protection Bypass for Automation" secret in your organization or project settings:'
     );
     output.log(`  1. Visit ${chalk.cyan('https://vercel.com/dashboard')}`);
-    output.log(`  2. Go to your project settings → Deployment Protection`);
+    output.log(
+      `  2. Go to your organization settings → Deployment Protection, or`
+    );
+    output.log(`     go to your project settings → Deployment Protection`);
     output.log(`  3. Generate a "Protection Bypass for Automation" secret`);
     output.log(
       `  4. Use it with ${chalk.cyan(
@@ -97,6 +100,16 @@ export async function getOrCreateDeploymentProtectionToken(
   if (process.env.VERCEL_AUTOMATION_BYPASS_SECRET) {
     output.debug('Using protection bypass secret from environment variable');
     return process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
+  }
+
+  if (org.protectionBypass && Object.values(org.protectionBypass).length) {
+    const protectionBypass = getAutomationBypassToken(org.protectionBypass);
+    if (protectionBypass) {
+      output.debug(
+        `Using existing protection bypass token from organization settings: ${protectionBypass}`
+      );
+      return protectionBypass;
+    }
   }
 
   if (
