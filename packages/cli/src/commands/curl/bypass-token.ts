@@ -93,6 +93,25 @@ export function getAutomationBypassToken(
   return token;
 }
 
+function tryGetProtectionBypassToken(
+  protectionBypass: ProjectProtectionBypass | undefined,
+  source: string
+): string | null {
+  if (!protectionBypass || !Object.values(protectionBypass).length) {
+    return null;
+  }
+
+  try {
+    const token = getAutomationBypassToken(protectionBypass);
+    output.debug(
+      `Using existing protection bypass token from ${source} settings: ${token}`
+    );
+    return token;
+  } catch {
+    return null;
+  }
+}
+
 export async function getOrCreateDeploymentProtectionToken(
   client: Client,
   { project, org }: ProjectLinked
@@ -102,28 +121,22 @@ export async function getOrCreateDeploymentProtectionToken(
     return process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
   }
 
-  if (org.protectionBypass && Object.values(org.protectionBypass).length) {
-    const protectionBypass = getAutomationBypassToken(org.protectionBypass);
-    if (protectionBypass) {
-      output.debug(
-        `Using existing protection bypass token from organization settings: ${protectionBypass}`
-      );
-      return protectionBypass;
-    }
+  const orgToken = tryGetProtectionBypassToken(
+    org.protectionBypass,
+    'organization'
+  );
+  if (orgToken) {
+    return orgToken;
   }
 
-  if (
-    project.protectionBypass &&
-    Object.values(project.protectionBypass).length
-  ) {
-    const protectionBypass = getAutomationBypassToken(project.protectionBypass);
-    if (protectionBypass) {
-      output.debug(
-        `Using existing protection bypass token from project settings: ${protectionBypass}`
-      );
-      return protectionBypass;
-    }
+  const projectToken = tryGetProtectionBypassToken(
+    project.protectionBypass,
+    'project'
+  );
+  if (projectToken) {
+    return projectToken;
   }
+
   const token = await createDeploymentProtectionToken(
     client,
     project.id,
