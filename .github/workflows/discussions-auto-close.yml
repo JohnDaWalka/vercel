@@ -11,7 +11,7 @@ jobs:
     steps:
       - name: Close and lock discussion
         run: |
-          lockSucceeded="$(gh api graphql -F discussionId=$DISCUSSION_ID -f query=' 
+          lockSucceeded="$(gh api graphql -F discussionId=$DISCUSSION_ID -f query='
           mutation lock($discussionId:ID!) {
             addDiscussionComment(input:{discussionId:$discussionId, body:"This discussion was automatically closed because the community moved to [community.vercel.com](https://community.vercel.com)"}) {
               comment{
@@ -23,7 +23,7 @@ jobs:
                 url
                 stateReason
               }
-            } 
+            }
             lockLockable(input: {lockableId:$discussionId}) {
               actor {
                 login
