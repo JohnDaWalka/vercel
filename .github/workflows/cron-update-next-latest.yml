@@ -17,6 +17,9 @@ jobs:
         # 0 means fetch all commits so we can commit and push in the script below
         with:
           fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
       - name: Enable corepack
         run: corepack enable pnpm
       - name: Create Pull Request
