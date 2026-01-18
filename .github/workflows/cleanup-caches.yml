@@ -22,7 +22,7 @@ jobs:
       - name: Cleanup old caches
         run: |
           echo "Cleaning up caches for closed branches and old PRs..."
-          
+
           # Get list of all caches older than 7 days (604800 seconds)
           gh api repos/${{ github.repository }}/actions/caches \
             --paginate \
@@ -31,7 +31,7 @@ jobs:
               echo "Deleting cache ID: $cache_id"
               gh api --method DELETE repos/${{ github.repository }}/actions/caches/$cache_id || true
             done
-          
+
           echo "Cache cleanup complete!"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
