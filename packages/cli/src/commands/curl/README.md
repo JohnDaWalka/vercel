@@ -142,8 +142,9 @@ For deployments with Vercel Protection enabled, the command automatically manage
 
 1. `--protection-bypass` flag value (if provided)
 2. `VERCEL_AUTOMATION_BYPASS_SECRET` environment variable
-3. Existing automation bypass token from project settings
-4. Attempts to create a new automation bypass token via API
+3. Existing automation bypass token from organization settings
+4. Existing automation bypass token from project settings
+5. Attempts to create a new automation bypass token via API
 
 If automatic token creation fails, you'll see instructions for manual setup.
 
@@ -165,22 +166,19 @@ The command will attempt to create an automation bypass token automatically. Thi
 
 If automatic creation isn't available or fails:
 
-1. **Navigate to your project**:
+1. **Navigate to your organization or project**:
 
    - Visit [https://vercel.com/dashboard](https://vercel.com/dashboard)
-   - Select your project
+   - Select your organization settings → Deployment Protection, or
+   - Select your project → Settings → Deployment Protection
 
-2. **Access Deployment Protection settings**:
-
-   - Go to **Settings** → **Deployment Protection**
-
-3. **Generate automation bypass secret**:
+2. **Generate automation bypass secret**:
 
    - Look for "Protection Bypass for Automation"
    - Click "Create" or "Generate" to create a new secret
    - Copy the generated secret
 
-4. **Use the secret**:
+3. **Use the secret**:
 
    Option A - With the flag:
 
