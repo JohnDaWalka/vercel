@@ -408,6 +408,7 @@ export interface Org {
   type: 'user' | 'team';
   id: string;
   slug: string;
+  protectionBypass?: ProjectProtectionBypass;
 }
 
 export interface ProjectLink {

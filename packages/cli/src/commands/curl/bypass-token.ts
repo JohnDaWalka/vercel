@@ -54,10 +54,13 @@ async function createDeploymentProtectionToken(
     );
 
     output.note(
-      'To bypass deployment protection, create a "Protection Bypass for Automation" secret in your project settings:'
+      'To bypass deployment protection, create a "Protection Bypass for Automation" secret in your organization or project settings:'
     );
     output.log(`  1. Visit ${chalk.cyan('https://vercel.com/dashboard')}`);
-    output.log(`  2. Go to your project settings → Deployment Protection`);
+    output.log(
+      `  2. Go to your organization settings → Deployment Protection, or`
+    );
+    output.log(`     go to your project settings → Deployment Protection`);
     output.log(`  3. Generate a "Protection Bypass for Automation" secret`);
     output.log(
       `  4. Use it with ${chalk.cyan(
@@ -90,6 +93,25 @@ export function getAutomationBypassToken(
   return token;
 }
 
+function tryGetProtectionBypassToken(
+  protectionBypass: ProjectProtectionBypass | undefined,
+  source: string
+): string | null {
+  if (!protectionBypass || !Object.values(protectionBypass).length) {
+    return null;
+  }
+
+  try {
+    const token = getAutomationBypassToken(protectionBypass);
+    output.debug(
+      `Using existing protection bypass token from ${source} settings: ${token}`
+    );
+    return token;
+  } catch {
+    return null;
+  }
+}
+
 export async function getOrCreateDeploymentProtectionToken(
   client: Client,
   { project, org }: ProjectLinked
@@ -99,18 +121,22 @@ export async function getOrCreateDeploymentProtectionToken(
     return process.env.VERCEL_AUTOMATION_BYPASS_SECRET;
   }
 
-  if (
-    project.protectionBypass &&
-    Object.values(project.protectionBypass).length
-  ) {
-    const protectionBypass = getAutomationBypassToken(project.protectionBypass);
-    if (protectionBypass) {
-      output.debug(
-        `Using existing protection bypass token from project settings: ${protectionBypass}`
-      );
-      return protectionBypass;
-    }
+  const orgToken = tryGetProtectionBypassToken(
+    org.protectionBypass,
+    'organization'
+  );
+  if (orgToken) {
+    return orgToken;
   }
+
+  const projectToken = tryGetProtectionBypassToken(
+    project.protectionBypass,
+    'project'
+  );
+  if (projectToken) {
+    return projectToken;
+  }
+
   const token = await createDeploymentProtectionToken(
     client,
     project.id,
