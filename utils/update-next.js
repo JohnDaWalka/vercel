@@ -98,7 +98,7 @@ async function createPullRequest(
     owner,
     repo,
     head: branch,
-    base: 'main',
+    base: 'dev',
     title: `[examples][tests] Upgrade Next.js to version ${newVersion}`,
     body: `This auto-generated PR updates ${updatedCount} package${updatedCount === 1 ? '' : 's'} to Next.js version ${newVersion}`,
   });
@@ -142,7 +142,7 @@ function updateExamples(github, newVersion, branch) {
       'infra+release@vercel.com',
     ]);
     exec('git', ['config', '--global', 'user.name', 'vercel-release-bot']);
-    exec('git', ['checkout', 'main']);
+    exec('git', ['checkout', 'dev']);
     exec('git', ['checkout', '-b', branch]);
     exec('git', ['add', '-A']);
     exec('git', ['commit', '-m', branch]);
