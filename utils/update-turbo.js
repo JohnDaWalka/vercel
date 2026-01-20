@@ -49,7 +49,7 @@ module.exports = async ({ github, context }) => {
     owner,
     repo,
     head: branch,
-    base: 'main',
+    base: 'dev',
     title: `[tests] Upgrade Turbo to version ${newVersion}`,
     body: `This auto-generated PR updates Turbo to version ${newVersion}`,
   });

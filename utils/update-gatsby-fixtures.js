@@ -89,7 +89,7 @@ module.exports = async ({ github, context }) => {
         owner,
         repo,
         head: branch,
-        base: 'main',
+        base: 'dev',
         title: '[tests] Update Gatsby fixture versions',
         body: 'Automatically generated PR to update Gatsby fixture versions in `@vercel/static-build`',
       });
