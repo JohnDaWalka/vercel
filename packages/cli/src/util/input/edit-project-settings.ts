@@ -18,7 +18,14 @@ const settingKeys = Object.keys(settingMap).sort() as unknown as readonly [
   ConfigKeys,
 ];
 
+<<<<<<< HEAD
 export type PartialProjectSettings = Pick<ProjectSettings, ConfigKeys>;
+=======
+export type PartialProjectSettings = Pick<
+  ProjectSettings,
+  ConfigKeys | 'monorepoManager'
+>;
+>>>>>>> upstream/main
 
 export async function editProjectSettings(
   client: Client,

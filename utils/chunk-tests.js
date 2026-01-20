@@ -92,6 +92,20 @@ const runnersMap = new Map([
   ],
 ]);
 
+<<<<<<< HEAD
+=======
+// Test type categorization for filtering
+const UNIT_TEST_SCRIPTS = ['vitest-unit', 'vitest-unit-node-24', 'test-unit'];
+const E2E_TEST_SCRIPTS = [
+  'vitest-e2e',
+  'vitest-e2e-node-20',
+  'test-e2e',
+  'test-e2e-node-all-versions',
+  'test-next-local',
+  'test-dev',
+];
+
+>>>>>>> upstream/main
 const packageOptionsOverrides = {
   // 'some-package': { min: 1, max: 1 },
 };
@@ -114,9 +128,25 @@ function getRunnerOptions(scriptName, packageName) {
 }
 
 async function getChunkedTests() {
+<<<<<<< HEAD
   const scripts = [...runnersMap.keys()];
   const rootPath = path.resolve(__dirname, '..');
 
+=======
+  let scripts = [...runnersMap.keys()];
+  const rootPath = path.resolve(__dirname, '..');
+
+  // Filter scripts based on TEST_TYPE environment variable
+  const testType = process.env.TEST_TYPE;
+  if (testType === 'unit') {
+    scripts = scripts.filter(s => UNIT_TEST_SCRIPTS.includes(s));
+    console.error('Filtering to unit tests only:', scripts.join(', '));
+  } else if (testType === 'e2e') {
+    scripts = scripts.filter(s => E2E_TEST_SCRIPTS.includes(s));
+    console.error('Filtering to e2e tests only:', scripts.join(', '));
+  }
+
+>>>>>>> upstream/main
   // Get affected packages based on git changes
   const baseSha = process.env.TURBO_BASE_SHA || process.env.GITHUB_BASE_REF;
   const result = baseSha
@@ -128,7 +158,10 @@ async function getChunkedTests() {
     affectedPackages = result.packages;
   } else if (result.result === 'test-none') {
     console.error('Testing strategy: no tests (no packages affected)');
+<<<<<<< HEAD
     console.log('[]');
+=======
+>>>>>>> upstream/main
     return [];
   }
 

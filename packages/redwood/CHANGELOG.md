@@ -1,5 +1,26 @@
 # @vercel/redwood
 
+<<<<<<< HEAD
+=======
+## 2.4.9
+
+### Patch Changes
+
+- replace getRuntimeNodeVersion with getNodeVersion ([#14622](https://github.com/vercel/vercel/pull/14622))
+
+## 2.4.8
+
+### Patch Changes
+
+- Remove getSpawnOptions ([#14604](https://github.com/vercel/vercel/pull/14604))
+
+## 2.4.7
+
+### Patch Changes
+
+- Replace getNodeVersion with getRuntimeNodeVersion ([#14600](https://github.com/vercel/vercel/pull/14600))
+
+>>>>>>> upstream/main
 ## 2.4.6
 
 ### Patch Changes

@@ -1,5 +1,26 @@
 # @vercel/remix-builder
 
+<<<<<<< HEAD
+=======
+## 5.5.9
+
+### Patch Changes
+
+- replace getRuntimeNodeVersion with getNodeVersion ([#14622](https://github.com/vercel/vercel/pull/14622))
+
+## 5.5.8
+
+### Patch Changes
+
+- Remove getSpawnOptions ([#14604](https://github.com/vercel/vercel/pull/14604))
+
+## 5.5.7
+
+### Patch Changes
+
+- Replace getNodeVersion with getRuntimeNodeVersion ([#14600](https://github.com/vercel/vercel/pull/14600))
+
+>>>>>>> upstream/main
 ## 5.5.6
 
 ### Patch Changes

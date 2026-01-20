@@ -10,17 +10,14 @@ on:
 jobs:
   clone-build-deploy:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN_PULL_REQUESTS }}
 
       - uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-          cache: 'npm'
-          cache-dependency-path: './examples/nextjs/package-lock.json'
 
       - run: |
           node --version

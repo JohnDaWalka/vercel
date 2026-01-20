@@ -16,7 +16,6 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    timeout-minutes: 30
     permissions:
       contents: write
       id-token: write
@@ -24,7 +23,7 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_TOKEN_PULL_REQUESTS }}
 
       - name: Fetch git tags
         run: git fetch origin 'refs/tags/*:refs/tags/*'
@@ -39,19 +38,6 @@ jobs:
 
       - name: install pnpm@8.3.1
         run: npm i -g pnpm@8.3.1
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
 
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
@@ -68,7 +54,7 @@ jobs:
           version: pnpm ci:version
           publish: pnpm ci:publish
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_PULL_REQUESTS }}
           NPM_CONFIG_PROVENANCE: 'true'
           NPM_TOKEN: ${{ secrets.NPM_TOKEN_ELEVATED }}
           SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
@@ -77,7 +63,7 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN_PULL_REQUESTS }}
           script: |
             const script = require('./utils/trigger-update-workflow.js')
             await script({ github, context })
@@ -86,7 +72,7 @@ jobs:
         if: steps.changesets.outputs.published == 'true'
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN_PULL_REQUESTS }}
           script: |
             const script = require('./utils/update-latest-release.js')
             await script({ github, context })

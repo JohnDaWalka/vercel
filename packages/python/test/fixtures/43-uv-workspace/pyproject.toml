@@ -1,7 +1,11 @@
 [project]
 name = "fixture-uv-workspace-fastapi"
 version = "0.0.1"
+<<<<<<< HEAD
 requires-python = ">=3.10,<=3.12"
+=======
+requires-python = ">=3.12"
+>>>>>>> upstream/main
 dependencies = [
   "fastapi==0.116.2",
   "python-lib",

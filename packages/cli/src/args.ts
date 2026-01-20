@@ -47,6 +47,10 @@ export const help = () => `
       projects                         Manages your Projects
       rm | remove          [id]        Removes a deployment
       teams                            Manages your teams
+<<<<<<< HEAD
+=======
+      upgrade                          Upgrade the Vercel CLI to the latest version
+>>>>>>> upstream/main
       whoami                           Shows the username of the currently logged in user
       blob                 [cmd]       Manages your Blob stores and files
 

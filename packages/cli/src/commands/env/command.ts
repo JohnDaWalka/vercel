@@ -198,6 +198,53 @@ export const pullSubcommand = {
   ],
 } as const;
 
+<<<<<<< HEAD
+=======
+export const runSubcommand = {
+  name: 'run',
+  aliases: [],
+  description:
+    'Run a command with environment variables from the linked Vercel project',
+  arguments: [
+    {
+      name: 'command',
+      required: true,
+      multiple: true,
+    },
+  ],
+  options: [
+    {
+      name: 'environment',
+      description:
+        'Specify the environment to pull variables from (default: development)',
+      shorthand: 'e',
+      type: String,
+      argument: 'TARGET',
+      deprecated: false,
+    },
+    {
+      name: 'git-branch',
+      description:
+        'Specify the Git branch to pull specific Environment Variables for',
+      shorthand: null,
+      type: String,
+      argument: 'NAME',
+      deprecated: false,
+    },
+  ],
+  examples: [
+    {
+      name: 'Run Next.js dev server with development environment variables',
+      value: `${packageName} env run -- next dev`,
+    },
+    {
+      name: 'Run tests with preview environment variables for a specific branch',
+      value: `${packageName} env run -e preview --git-branch feature-x -- npm test`,
+    },
+  ],
+} as const;
+
+>>>>>>> upstream/main
 export const updateSubcommand = {
   name: 'update',
   aliases: [],
@@ -270,6 +317,10 @@ export const envCommand = {
     listSubcommand,
     pullSubcommand,
     removeSubcommand,
+<<<<<<< HEAD
+=======
+    runSubcommand,
+>>>>>>> upstream/main
     updateSubcommand,
   ],
   options: [],

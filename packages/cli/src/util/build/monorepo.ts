@@ -46,6 +46,11 @@ export async function setMonorepoDefaultSettings(
       return;
     }
 
+<<<<<<< HEAD
+=======
+    projectSettings.monorepoManager = result.monorepoManager;
+
+>>>>>>> upstream/main
     const { monorepoManager, ...commands } = result;
 
     output.log(

@@ -14,7 +14,11 @@
       "require": "./dist/index.js"
     }
   },
+<<<<<<< HEAD
   "version": "3.0.5",
+=======
+  "version": "3.0.6",
+>>>>>>> upstream/main
   "repository": {
     "directory": "packages/oidc-aws-credentials-provider",
     "type": "git",

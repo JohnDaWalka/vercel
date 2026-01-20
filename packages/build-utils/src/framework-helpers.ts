@@ -7,21 +7,44 @@ export const BACKEND_FRAMEWORKS = [
   'express',
   'hono',
   'h3',
+<<<<<<< HEAD
+=======
+  'koa',
+>>>>>>> upstream/main
   'nestjs',
   'fastify',
   'elysia',
 ] as const;
 
+<<<<<<< HEAD
+=======
+export const PYTHON_FRAMEWORKS = [
+  'fastapi',
+  'flask',
+  'python', // Generic Python framework preset
+] as const;
+
+export const RUNTIME_FRAMEWORKS = ['python'] as const;
+
+>>>>>>> upstream/main
 export const BACKEND_BUILDERS = [
   '@vercel/express',
   '@vercel/hono',
   '@vercel/h3',
+<<<<<<< HEAD
+=======
+  '@vercel/koa',
+>>>>>>> upstream/main
   '@vercel/nestjs',
   '@vercel/fastify',
   '@vercel/elysia',
 ] as const;
 
 export type BackendFramework = (typeof BACKEND_FRAMEWORKS)[number];
+<<<<<<< HEAD
+=======
+export type PythonFramework = (typeof PYTHON_FRAMEWORKS)[number];
+>>>>>>> upstream/main
 
 /**
  * Checks if the given framework is a backend framework
@@ -33,6 +56,16 @@ export function isBackendFramework(
   return BACKEND_FRAMEWORKS.includes(framework as BackendFramework);
 }
 
+<<<<<<< HEAD
+=======
+export function isPythonFramework(
+  framework: string | null | undefined
+): framework is (typeof PYTHON_FRAMEWORKS)[number] {
+  if (!framework) return false;
+  return PYTHON_FRAMEWORKS.includes(framework as PythonFramework);
+}
+
+>>>>>>> upstream/main
 // Opt builds into experimental builder, but don't introspect the app
 export function isExperimentalBackendsWithoutIntrospectionEnabled(): boolean {
   return process.env.VERCEL_BACKENDS_BUILDS === '1';

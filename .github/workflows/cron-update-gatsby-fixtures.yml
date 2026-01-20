@@ -10,7 +10,6 @@ on:
 jobs:
   update-gatsby-fixtures:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,10 +25,10 @@ jobs:
         uses: actions/github-script@v7
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_PULL_REQUESTS }}
         # See https://github.com/actions/github-script#run-a-separate-file-with-an-async-function
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.GH_TOKEN_PULL_REQUESTS }}
           script: |
             const script = require('./utils/update-gatsby-fixtures.js')
             await script({ github, context })

@@ -1,6 +1,10 @@
 {
   "name": "@vercel/backends",
+<<<<<<< HEAD
   "version": "0.0.17",
+=======
+  "version": "0.0.22",
+>>>>>>> upstream/main
   "license": "Apache-2.0",
   "main": "./dist/index.mjs",
   "homepage": "https://vercel.com/docs",
@@ -31,8 +35,12 @@
     "@vercel/nft": "1.1.1",
     "@vercel/static-config": "workspace:*",
     "@vercel/introspection": "workspace:*",
+<<<<<<< HEAD
     "fs-extra": "11.1.0",
     "rolldown": "1.0.0-beta.35"
+=======
+    "fs-extra": "11.1.0"
+>>>>>>> upstream/main
   },
   "devDependencies": {
     "@types/express": "5.0.3",

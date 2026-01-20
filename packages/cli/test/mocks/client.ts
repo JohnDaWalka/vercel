@@ -228,6 +228,10 @@ export class MockClient extends Client {
 
     output.initialize({
       stream: this.stderr,
+<<<<<<< HEAD
+=======
+      supportsHyperlink: false,
+>>>>>>> upstream/main
     });
 
     this.argv = [];

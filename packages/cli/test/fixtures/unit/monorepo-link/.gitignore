@@ -1,3 +1,8 @@
 dist
 !/.vercel
 .vercel/output
+<<<<<<< HEAD
+=======
+# Ignore .vercel directories generated in subdirectories by tests
+*/.vercel
+>>>>>>> upstream/main

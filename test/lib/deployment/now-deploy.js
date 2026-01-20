@@ -36,7 +36,26 @@ async function nowDeploy(projectName, bodies, randomness, uploadNowJson, opts) {
     VERCEL_DEBUG,
     VERCEL_CLI_VERSION,
     VERCEL_FORCE_PYTHON_STREAMING,
+<<<<<<< HEAD
   } = process.env;
+=======
+    VERCEL_FORCE_BUILD_IN_HIVE,
+    VERCEL_BUILD_CONTAINER_VERSION,
+  } = process.env;
+
+  // Warn if using custom build container configuration
+  if (VERCEL_FORCE_BUILD_IN_HIVE || VERCEL_BUILD_CONTAINER_VERSION) {
+    logWithinTest('⚠️ Running tests against a custom build container');
+    if (VERCEL_FORCE_BUILD_IN_HIVE) {
+      logWithinTest(`VERCEL_FORCE_BUILD_IN_HIVE=${VERCEL_FORCE_BUILD_IN_HIVE}`);
+    }
+    if (VERCEL_BUILD_CONTAINER_VERSION) {
+      logWithinTest(
+        `VERCEL_BUILD_CONTAINER_VERSION=${VERCEL_BUILD_CONTAINER_VERSION}`
+      );
+    }
+  }
+>>>>>>> upstream/main
   const nowJson = JSON.parse(
     bodies['vercel.json'] || bodies['now.json'] || '{}'
   );
@@ -63,6 +82,11 @@ async function nowDeploy(projectName, bodies, randomness, uploadNowJson, opts) {
         VERCEL_DEBUG,
         VERCEL_CLI_VERSION,
         VERCEL_FORCE_PYTHON_STREAMING,
+<<<<<<< HEAD
+=======
+        VERCEL_FORCE_BUILD_IN_HIVE,
+        VERCEL_BUILD_CONTAINER_VERSION,
+>>>>>>> upstream/main
         NEXT_TELEMETRY_DISABLED: '1',
       },
     },

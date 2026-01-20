@@ -33,6 +33,16 @@ export class EnvTelemetryClient
     });
   }
 
+<<<<<<< HEAD
+=======
+  trackCliSubcommandRun(actual: string) {
+    this.trackCliSubcommand({
+      subcommand: 'run',
+      value: actual,
+    });
+  }
+
+>>>>>>> upstream/main
   trackCliSubcommandUpdate(actual: string) {
     this.trackCliSubcommand({
       subcommand: 'update',

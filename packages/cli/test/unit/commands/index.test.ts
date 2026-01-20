@@ -60,6 +60,10 @@ describe('index', () => {
         ['team', 'teams'],
         ['teams', 'teams'],
         ['telemetry', 'telemetry'],
+<<<<<<< HEAD
+=======
+        ['upgrade', 'upgrade'],
+>>>>>>> upstream/main
         ['whoami', 'whoami'],
       ])
     );

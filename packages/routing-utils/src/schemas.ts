@@ -473,6 +473,14 @@ export const routesSchema = {
               maxLength: 256,
             },
           },
+<<<<<<< HEAD
+=======
+          respectOriginCacheControl: {
+            description:
+              'When set to true (default), external rewrites will respect the Cache-Control header from the origin. When false, caching is disabled for this rewrite.',
+            type: 'boolean',
+          },
+>>>>>>> upstream/main
         },
       },
       {
@@ -532,6 +540,14 @@ export const rewritesSchema = {
           maxLength: 256,
         },
       },
+<<<<<<< HEAD
+=======
+      respectOriginCacheControl: {
+        description:
+          'When set to true (default), external rewrites will respect the Cache-Control header from the origin. When false, caching is disabled for this rewrite.',
+        type: 'boolean',
+      },
+>>>>>>> upstream/main
     },
   },
 } as const;

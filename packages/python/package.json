@@ -1,6 +1,10 @@
 {
   "name": "@vercel/python",
+<<<<<<< HEAD
   "version": "6.1.5",
+=======
+  "version": "6.2.1",
+>>>>>>> upstream/main
   "main": "./dist/index.js",
   "license": "Apache-2.0",
   "homepage": "https://vercel.com/docs/runtimes#official-runtimes/python",
@@ -23,16 +27,30 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
+<<<<<<< HEAD
+=======
+    "@renovatebot/pep440": "4.2.1",
+>>>>>>> upstream/main
     "@types/execa": "^0.9.0",
     "@types/fs-extra": "11.0.2",
     "@types/jest": "27.4.1",
     "@types/node": "14.18.33",
     "@types/which": "3.0.0",
     "@vercel/build-utils": "workspace:*",
+<<<<<<< HEAD
+=======
+    "@vercel/error-utils": "workspace:*",
+>>>>>>> upstream/main
     "cross-env": "7.0.3",
     "execa": "^1.0.0",
     "fs-extra": "11.1.1",
     "jest-junit": "16.0.0",
+<<<<<<< HEAD
+=======
+    "minimatch": "10.1.1",
+    "pip-requirements-js": "1.0.2",
+    "smol-toml": "1.5.2",
+>>>>>>> upstream/main
     "which": "3.0.0"
   }
 }

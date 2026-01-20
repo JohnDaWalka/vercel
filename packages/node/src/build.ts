@@ -24,7 +24,10 @@ import {
   runNpmInstall,
   runPackageJsonScript,
   getNodeVersion,
+<<<<<<< HEAD
   getSpawnOptions,
+=======
+>>>>>>> upstream/main
   debug,
   isSymbolicLink,
   walkParentDirs,
@@ -82,7 +85,10 @@ async function downloadInstallAndBundle({
     config,
     meta
   );
+<<<<<<< HEAD
   const spawnOpts = getSpawnOptions(meta, nodeVersion);
+=======
+>>>>>>> upstream/main
 
   const {
     cliType,
@@ -91,11 +97,19 @@ async function downloadInstallAndBundle({
     turboSupportsCorepackHome,
   } = await scanParentDirs(entrypointFsDirname, true);
 
+<<<<<<< HEAD
   spawnOpts.env = getEnvForPackageManager({
     cliType,
     lockfileVersion,
     packageJsonPackageManager,
     env: spawnOpts.env || {},
+=======
+  const spawnEnv = getEnvForPackageManager({
+    cliType,
+    lockfileVersion,
+    packageJsonPackageManager,
+    env: process.env,
+>>>>>>> upstream/main
     turboSupportsCorepackHome,
     projectCreatedAt: config.projectSettings?.createdAt,
   });
@@ -105,7 +119,11 @@ async function downloadInstallAndBundle({
     if (installCommand.trim()) {
       console.log(`Running "install" command: \`${installCommand}\`...`);
       await execCommand(installCommand, {
+<<<<<<< HEAD
         ...spawnOpts,
+=======
+        env: spawnEnv,
+>>>>>>> upstream/main
         cwd: entrypointFsDirname,
       });
     } else {
@@ -115,13 +133,21 @@ async function downloadInstallAndBundle({
     await runNpmInstall(
       entrypointFsDirname,
       [],
+<<<<<<< HEAD
       spawnOpts,
+=======
+      { env: spawnEnv },
+>>>>>>> upstream/main
       meta,
       config.projectSettings?.createdAt
     );
   }
   const entrypointPath = downloadedFiles[entrypoint].fsPath;
+<<<<<<< HEAD
   return { entrypointPath, entrypointFsDirname, nodeVersion, spawnOpts };
+=======
+  return { entrypointPath, entrypointFsDirname, nodeVersion, spawnEnv };
+>>>>>>> upstream/main
 }
 
 function renameTStoJS(path: string) {
@@ -294,7 +320,10 @@ async function compile(
       },
     }
   );
+<<<<<<< HEAD
 
+=======
+>>>>>>> upstream/main
   for (const warning of warnings) {
     debug(`Warning from trace: ${warning.message}`);
   }
@@ -440,7 +469,11 @@ export const build = async ({
     entrypointPath: _entrypointPath,
     entrypointFsDirname,
     nodeVersion,
+<<<<<<< HEAD
     spawnOpts,
+=======
+    spawnEnv,
+>>>>>>> upstream/main
   } = await downloadInstallAndBundle({
     files,
     entrypoint,
@@ -459,13 +492,20 @@ export const build = async ({
   // primary builder
   if (projectBuildCommand && considerBuildCommand) {
     await execCommand(projectBuildCommand, {
+<<<<<<< HEAD
       ...spawnOpts,
 
+=======
+>>>>>>> upstream/main
       // Yarn v2 PnP mode may be activated, so force
       // "node-modules" linker style
       env: {
         YARN_NODE_LINKER: 'node-modules',
+<<<<<<< HEAD
         ...spawnOpts.env,
+=======
+        ...spawnEnv,
+>>>>>>> upstream/main
       },
 
       cwd: workPath,
@@ -478,7 +518,11 @@ export const build = async ({
     await runPackageJsonScript(
       entrypointFsDirname,
       possibleScripts,
+<<<<<<< HEAD
       spawnOpts,
+=======
+      { env: spawnEnv },
+>>>>>>> upstream/main
       config.projectSettings?.createdAt
     );
   }

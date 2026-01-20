@@ -100,7 +100,11 @@ function spawnWorker(payload: GetLatestWorkerPayload) {
   // we need to find the update worker script since the location is
   // different based on production vs tests
   let dir = dirname(__filename);
+<<<<<<< HEAD
   let script = resolvePath(dir, 'dist', 'get-latest-worker.js');
+=======
+  let script = resolvePath(dir, 'dist', 'get-latest-worker.cjs');
+>>>>>>> upstream/main
   const { root } = parsePath(dir);
   while (!existsSync(script)) {
     dir = dirname(dir);
@@ -109,7 +113,11 @@ function spawnWorker(payload: GetLatestWorkerPayload) {
       output?.debug('Failed to find the get latest worker script!');
       return;
     }
+<<<<<<< HEAD
     script = resolvePath(dir, 'dist', 'get-latest-worker.js');
+=======
+    script = resolvePath(dir, 'dist', 'get-latest-worker.cjs');
+>>>>>>> upstream/main
   }
 
   // spawn the worker with an IPC channel

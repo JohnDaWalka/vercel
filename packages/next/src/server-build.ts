@@ -2799,6 +2799,12 @@ export async function serverBuild({
               dest: path.posix.join('/', entryDirectory, '/$nextLocale/404'),
               status: 404,
               caseSensitive: true,
+<<<<<<< HEAD
+=======
+              headers: {
+                'x-next-error-status': '404',
+              },
+>>>>>>> upstream/main
             },
             {
               src: path.posix.join('/', entryDirectory, '.*'),
@@ -2808,6 +2814,12 @@ export async function serverBuild({
                 `/${i18n.defaultLocale}/404`
               ),
               status: 404,
+<<<<<<< HEAD
+=======
+              headers: {
+                'x-next-error-status': '404',
+              },
+>>>>>>> upstream/main
             },
           ]
         : [
@@ -2834,6 +2846,12 @@ export async function serverBuild({
                     : '/_error'
               ),
               status: 404,
+<<<<<<< HEAD
+=======
+              headers: {
+                'x-next-error-status': '404',
+              },
+>>>>>>> upstream/main
             },
           ]),
 
@@ -2851,6 +2869,12 @@ export async function serverBuild({
               dest: path.posix.join('/', entryDirectory, '/$nextLocale/500'),
               status: 500,
               caseSensitive: true,
+<<<<<<< HEAD
+=======
+              headers: {
+                'x-next-error-status': '500',
+              },
+>>>>>>> upstream/main
             },
             {
               src: path.posix.join('/', entryDirectory, '.*'),
@@ -2860,6 +2884,12 @@ export async function serverBuild({
                 `/${i18n.defaultLocale}/500`
               ),
               status: 500,
+<<<<<<< HEAD
+=======
+              headers: {
+                'x-next-error-status': '500',
+              },
+>>>>>>> upstream/main
             },
           ]
         : [
@@ -2882,6 +2912,12 @@ export async function serverBuild({
                   : '/_error'
               ),
               status: 500,
+<<<<<<< HEAD
+=======
+              headers: {
+                'x-next-error-status': '500',
+              },
+>>>>>>> upstream/main
             },
           ]),
     ],

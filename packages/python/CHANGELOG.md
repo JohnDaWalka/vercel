@@ -1,5 +1,28 @@
 # @vercel/python
 
+<<<<<<< HEAD
+=======
+## 6.2.1
+
+### Patch Changes
+
+- [python] experimental python runtime framework preset ([#14646](https://github.com/vercel/vercel/pull/14646))
+
+- Re-enable automatic python installs at build time. ([#14670](https://github.com/vercel/vercel/pull/14670))
+
+## 6.2.0
+
+### Minor Changes
+
+- Support for python 3.13 and 3.14 ([#14601](https://github.com/vercel/vercel/pull/14601))
+
+## 6.1.6
+
+### Patch Changes
+
+- [python] fix handling of ASGI headers in local runtime ([#14513](https://github.com/vercel/vercel/pull/14513))
+
+>>>>>>> upstream/main
 ## 6.1.5
 
 ### Patch Changes

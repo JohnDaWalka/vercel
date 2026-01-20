@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import fs from 'fs';
 import { join, posix as pathPosix } from 'path';
 import type { FileFsRef } from '@vercel/build-utils';
@@ -38,10 +39,31 @@ export const FLASK_CONTENT_REGEX =
 export const FLASK_CANDIDATE_ENTRYPOINTS = FLASK_ENTRYPOINT_FILENAMES.flatMap(
   (filename: string) =>
     FLASK_ENTRYPOINT_DIRS.map((dir: string) =>
+=======
+import { join, posix as pathPosix } from 'path';
+import type { FileFsRef, PythonFramework } from '@vercel/build-utils';
+import { glob, debug, isPythonEntrypoint } from '@vercel/build-utils';
+import { readConfigFile } from '@vercel/build-utils';
+
+export const PYTHON_ENTRYPOINT_FILENAMES = [
+  'app',
+  'index',
+  'server',
+  'main',
+  'wsgi',
+  'asgi',
+];
+export const PYTHON_ENTRYPOINT_DIRS = ['', 'src', 'app', 'api'];
+
+export const PYTHON_CANDIDATE_ENTRYPOINTS = PYTHON_ENTRYPOINT_FILENAMES.flatMap(
+  (filename: string) =>
+    PYTHON_ENTRYPOINT_DIRS.map((dir: string) =>
+>>>>>>> upstream/main
       pathPosix.join(dir, `${filename}.py`)
     )
 );
 
+<<<<<<< HEAD
 export function isFlaskEntrypoint(
   file: FileFsRef | { fsPath?: string }
 ): boolean {
@@ -126,6 +148,8 @@ export async function detectFastapiEntrypoint(
   }
 }
 
+=======
+>>>>>>> upstream/main
 export async function getPyprojectEntrypoint(
   workPath: string
 ): Promise<string | null> {
@@ -164,6 +188,7 @@ export async function getPyprojectEntrypoint(
 }
 
 /**
+<<<<<<< HEAD
  * Detect a Python entrypoint path for a given framework relative to workPath, or return null if not found.
  */
 export async function detectPythonEntrypoint(
@@ -177,6 +202,63 @@ export async function detectPythonEntrypoint(
   } else if (framework === 'flask') {
     entrypoint = await detectFlaskEntrypoint(workPath, configuredEntrypoint);
   }
+=======
+ * Detect a Python entrypoint for any Python framework using AST-based detection.
+ */
+export async function detectGenericPythonEntrypoint(
+  workPath: string,
+  configuredEntrypoint: string
+): Promise<string | null> {
+  const entry = configuredEntrypoint.endsWith('.py')
+    ? configuredEntrypoint
+    : `${configuredEntrypoint}.py`;
+
+  try {
+    const fsFiles = await glob('**', workPath);
+
+    // If the configured entrypoint exists and is valid, use it
+    if (fsFiles[entry]) {
+      const isValid = await isPythonEntrypoint(fsFiles[entry] as FileFsRef);
+      if (isValid) {
+        debug(`Using configured Python entrypoint: ${entry}`);
+        return entry;
+      }
+    }
+
+    // Search candidate locations using AST-based detection
+    const candidates = PYTHON_CANDIDATE_ENTRYPOINTS.filter(
+      (c: string) => !!fsFiles[c]
+    );
+
+    for (const candidate of candidates) {
+      const isValid = await isPythonEntrypoint(fsFiles[candidate] as FileFsRef);
+      if (isValid) {
+        debug(`Detected Python entrypoint: ${candidate}`);
+        return candidate;
+      }
+    }
+
+    // No valid entrypoint found via AST detection
+    return null;
+  } catch {
+    debug('Failed to discover Python entrypoint');
+    return null;
+  }
+}
+
+/**
+ * Detect a Python entrypoint path for a given framework relative to workPath, or return null if not found.
+ */
+export async function detectPythonEntrypoint(
+  _framework: PythonFramework,
+  workPath: string,
+  configuredEntrypoint: string
+): Promise<string | null> {
+  const entrypoint = await detectGenericPythonEntrypoint(
+    workPath,
+    configuredEntrypoint
+  );
+>>>>>>> upstream/main
   if (entrypoint) return entrypoint;
   return await getPyprojectEntrypoint(workPath);
 }

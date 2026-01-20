@@ -1,6 +1,10 @@
 {
   "name": "@vercel/hono",
+<<<<<<< HEAD
   "version": "0.2.18",
+=======
+  "version": "0.2.27",
+>>>>>>> upstream/main
   "license": "Apache-2.0",
   "main": "./dist/index.js",
   "homepage": "https://vercel.com/docs",
@@ -28,7 +32,10 @@
     "@vercel/node": "workspace:*",
     "fs-extra": "11.1.0",
     "path-to-regexp": "8.3.0",
+<<<<<<< HEAD
     "rolldown": "1.0.0-beta.35",
+=======
+>>>>>>> upstream/main
     "ts-morph": "12.0.0",
     "zod": "3.22.4"
   },

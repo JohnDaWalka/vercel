@@ -12,7 +12,16 @@ import {
   readConfigFile,
   traverseUpDirectories,
 } from '@vercel/build-utils';
+<<<<<<< HEAD
 import { getVenvPythonBin, runUvCommand, findDir } from './utils';
+=======
+import {
+  getVenvPythonBin,
+  runUvCommand,
+  findDir,
+  getProtectedUvEnv,
+} from './utils';
+>>>>>>> upstream/main
 
 const isWin = process.platform === 'win32';
 const uvExec = isWin ? 'uv.exe' : 'uv';
@@ -291,7 +300,11 @@ export async function uvLock({
   const pretty = `${uvPath} ${args.join(' ')}`;
   debug(`Running "${pretty}" in ${projectDir}...`);
   try {
+<<<<<<< HEAD
     await execa(uvPath, args, { cwd: projectDir });
+=======
+    await execa(uvPath, args, { cwd: projectDir, env: getProtectedUvEnv() });
+>>>>>>> upstream/main
   } catch (err) {
     throw new Error(
       `Failed to run "${pretty}": ${
@@ -598,6 +611,10 @@ async function pipInstall(
     try {
       await execa(uvPath!, uvArgs, {
         cwd: workPath,
+<<<<<<< HEAD
+=======
+        env: getProtectedUvEnv(),
+>>>>>>> upstream/main
       });
       return;
     } catch (err) {

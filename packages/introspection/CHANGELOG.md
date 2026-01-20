@@ -1,5 +1,22 @@
 # @vercel/introspection
 
+<<<<<<< HEAD
+=======
+## 0.0.9
+
+### Patch Changes
+
+- - Parrallelize NFT and introspection steps ([#14619](https://github.com/vercel/vercel/pull/14619))
+  - Increase timeout to 8 seconds. It's taking up to 5 seconds for a large app we have been testing with
+  - Add more debug logs to introspection process
+
+## 0.0.8
+
+### Patch Changes
+
+- Add support for 'main' entrypoint and search in `dist` for app entrypoint if a build script is provided ([#14550](https://github.com/vercel/vercel/pull/14550))
+
+>>>>>>> upstream/main
 ## 0.0.7
 
 ### Patch Changes

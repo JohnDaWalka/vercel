@@ -1,6 +1,10 @@
 {
   "name": "@vercel/elysia",
+<<<<<<< HEAD
   "version": "0.1.15",
+=======
+  "version": "0.1.24",
+>>>>>>> upstream/main
   "license": "Apache-2.0",
   "main": "./dist/index.js",
   "homepage": "https://vercel.com/docs",

@@ -1,6 +1,10 @@
 {
   "name": "@vercel/static-build",
+<<<<<<< HEAD
   "version": "2.8.15",
+=======
+  "version": "2.8.25",
+>>>>>>> upstream/main
   "license": "Apache-2.0",
   "main": "./dist/index",
   "homepage": "https://vercel.com/docs/build-step",

@@ -9,7 +9,11 @@ import listItem from '../../util/output/list-item';
 import toHumanPath from '../../util/humanize-path';
 import type Client from '../../util/client';
 import cmd from '../../util/output/cmd';
+<<<<<<< HEAD
 import didYouMean from '../../util/init/did-you-mean';
+=======
+import didYouMean from '../../util/did-you-mean';
+>>>>>>> upstream/main
 import { getCommandName } from '../../util/pkg-name';
 import output from '../../output-manager';
 import type { InitTelemetryClient } from '../../util/telemetry/commands/init';

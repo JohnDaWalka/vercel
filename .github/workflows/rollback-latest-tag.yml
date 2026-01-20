@@ -12,7 +12,6 @@ jobs:
   rollback:
     name: Rollback Latest Tag on NPM
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     permissions:
       id-token: write
     steps:

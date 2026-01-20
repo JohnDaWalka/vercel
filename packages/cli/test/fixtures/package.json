@@ -1,5 +1,9 @@
 {
   "private": true,
   "name": "cli-test-fixtures",
+<<<<<<< HEAD
+=======
+  "type": "commonjs",
+>>>>>>> upstream/main
   "description": "We created package.json here to avoid reading the monorepo package.json during testing"
 }

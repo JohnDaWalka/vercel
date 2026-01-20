@@ -1,6 +1,10 @@
 {
   "name": "@vercel/build-utils",
+<<<<<<< HEAD
   "version": "13.2.4",
+=======
+  "version": "13.2.13",
+>>>>>>> upstream/main
   "license": "Apache-2.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.js",

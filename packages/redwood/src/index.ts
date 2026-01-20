@@ -18,7 +18,10 @@ import {
   debug,
   getNodeVersion,
   getPrefixedEnvVars,
+<<<<<<< HEAD
   getSpawnOptions,
+=======
+>>>>>>> upstream/main
   runNpmInstall,
   runPackageJsonScript,
   execCommand,
@@ -76,10 +79,13 @@ export const build: BuildV2 = async ({
     meta
   );
 
+<<<<<<< HEAD
   const spawnOpts = getSpawnOptions(meta, nodeVersion);
   if (!spawnOpts.env) {
     spawnOpts.env = {};
   }
+=======
+>>>>>>> upstream/main
   const {
     cliType,
     lockfileVersion,
@@ -87,11 +93,19 @@ export const build: BuildV2 = async ({
     turboSupportsCorepackHome,
   } = await scanParentDirs(entrypointFsDirname, true);
 
+<<<<<<< HEAD
   spawnOpts.env = getEnvForPackageManager({
     cliType,
     lockfileVersion,
     packageJsonPackageManager,
     env: spawnOpts.env || {},
+=======
+  const spawnEnv = getEnvForPackageManager({
+    cliType,
+    lockfileVersion,
+    packageJsonPackageManager,
+    env: process.env,
+>>>>>>> upstream/main
     turboSupportsCorepackHome,
     projectCreatedAt: config.projectSettings?.createdAt,
   });
@@ -101,7 +115,11 @@ export const build: BuildV2 = async ({
       console.log(`Running "install" command: \`${installCommand}\`...`);
 
       await execCommand(installCommand, {
+<<<<<<< HEAD
         ...spawnOpts,
+=======
+        env: spawnEnv,
+>>>>>>> upstream/main
         cwd: entrypointFsDirname,
       });
     } else {
@@ -111,7 +129,11 @@ export const build: BuildV2 = async ({
     await runNpmInstall(
       entrypointFsDirname,
       [],
+<<<<<<< HEAD
       spawnOpts,
+=======
+      { env: spawnEnv },
+>>>>>>> upstream/main
       meta,
       config.projectSettings?.createdAt
     );
@@ -130,7 +152,11 @@ export const build: BuildV2 = async ({
   if (buildCommand) {
     debug(`Executing build command "${buildCommand}"`);
     await execCommand(buildCommand, {
+<<<<<<< HEAD
       ...spawnOpts,
+=======
+      env: spawnEnv,
+>>>>>>> upstream/main
       cwd: workPath,
     });
   } else if (hasScript('vercel-build', pkg)) {
@@ -138,7 +164,11 @@ export const build: BuildV2 = async ({
     await runPackageJsonScript(
       workPath,
       'vercel-build',
+<<<<<<< HEAD
       spawnOpts,
+=======
+      { env: spawnEnv },
+>>>>>>> upstream/main
       config.projectSettings?.createdAt
     );
   } else if (hasScript('build', pkg)) {
@@ -146,7 +176,11 @@ export const build: BuildV2 = async ({
     await runPackageJsonScript(
       workPath,
       'build',
+<<<<<<< HEAD
       spawnOpts,
+=======
+      { env: spawnEnv },
+>>>>>>> upstream/main
       config.projectSettings?.createdAt
     );
   } else {
@@ -167,7 +201,11 @@ export const build: BuildV2 = async ({
       cmd = 'yarn rw deploy vercel';
     }
     await execCommand(cmd, {
+<<<<<<< HEAD
       ...spawnOpts,
+=======
+      env: spawnEnv,
+>>>>>>> upstream/main
       cwd: workPath,
     });
   }

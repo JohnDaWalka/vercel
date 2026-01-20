@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
     "allowJs": true,
+<<<<<<< HEAD
+=======
+    "module": "es2022",
+>>>>>>> upstream/main
     "noImplicitReturns": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,

@@ -342,6 +342,16 @@ type RoutesManifestOld = {
    * as though pages router were being used.
    */
   appType?: 'app' | 'pages' | 'hybrid';
+<<<<<<< HEAD
+=======
+  /**
+   * User-configured deployment ID for skew protection.
+   * This allows users to specify a custom deployment identifier
+   * in their next.config.js that will be used for version skew protection
+   * with pre-built deployments.
+   */
+  deploymentId?: string;
+>>>>>>> upstream/main
 };
 
 type RoutesManifestV4 = Omit<RoutesManifestOld, 'dynamicRoutes' | 'version'> & {
@@ -375,7 +385,18 @@ export async function getRoutesManifest(
 
   if (shouldHaveManifest && !hasRoutesManifest) {
     throw new NowBuildError({
+<<<<<<< HEAD
       message: `The file "${pathRoutesManifest}" couldn't be found. This is often caused by a misconfiguration in your project.`,
+=======
+      message:
+        `The file "${pathRoutesManifest}" couldn't be found. ` +
+        `This is usually caused by one of the following:\n\n` +
+        `1. The "Output Directory" setting in your project is misconfigured. ` +
+        `Ensure it matches your Next.js "distDir" configuration (defaults to ".next").\n\n` +
+        `2. If using Turborepo, ensure your task outputs include the Next.js build directory. ` +
+        `Add ".next/**" (or your custom distDir) to the "outputs" array in turbo.json for the build task.\n\n` +
+        `3. The build command did not complete successfully. Check the build logs above for errors.`,
+>>>>>>> upstream/main
       link: 'https://err.sh/vercel/vercel/now-next-routes-manifest',
       code: 'NEXT_NO_ROUTES_MANIFEST',
     });
@@ -1100,12 +1121,32 @@ export async function createLambdaFromPseudoLayers({
   });
 }
 
+<<<<<<< HEAD
+=======
+// This should be a subset of Next.js's full NextConfigRuntime
+// https://github.com/vercel/next.js/blob/6169e786020b63e101cc09285e1277e278cd34b8/packages/next/src/server/config-shared.ts#L1588
+export type NextConfigRuntime = {
+  pageExtensions: string[];
+  experimental?: {
+    cacheComponents?: boolean;
+    clientParamParsingOrigins?: string[];
+    clientSegmentCache?: boolean;
+    ppr?: boolean | 'incremental';
+    serverActions?: Record<string, never>;
+  };
+};
+
+>>>>>>> upstream/main
 export type NextRequiredServerFilesManifest = {
   appDir?: string;
   relativeAppDir?: string;
   files: string[];
   ignore: string[];
+<<<<<<< HEAD
   config: Record<string, any>;
+=======
+  config: NextConfigRuntime;
+>>>>>>> upstream/main
 };
 
 /**
@@ -1291,6 +1332,7 @@ export async function getRequiredServerFilesManifest(
     await fs.readFile(pathRequiredServerFilesManifest, 'utf8')
   );
 
+<<<<<<< HEAD
   const requiredServerFiles = {
     files: [],
     ignore: [],
@@ -1306,6 +1348,17 @@ export async function getRequiredServerFilesManifest(
       requiredServerFiles.config = manifestData.config;
       requiredServerFiles.appDir = manifestData.appDir;
       break;
+=======
+  switch (manifestData.version) {
+    case 1: {
+      return {
+        files: manifestData.files,
+        ignore: manifestData.ignore,
+        config: manifestData.config,
+        appDir: manifestData.appDir,
+        relativeAppDir: manifestData.relativeAppDir,
+      };
+>>>>>>> upstream/main
     }
     default: {
       throw new Error(
@@ -1313,7 +1366,10 @@ export async function getRequiredServerFilesManifest(
       );
     }
   }
+<<<<<<< HEAD
   return requiredServerFiles;
+=======
+>>>>>>> upstream/main
 }
 
 export async function getPrerenderManifest(

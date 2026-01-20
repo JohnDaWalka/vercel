@@ -17,7 +17,11 @@ export type { TriggerEvent };
 
 export type LambdaOptions = LambdaOptionsWithFiles | LambdaOptionsWithZipBuffer;
 
+<<<<<<< HEAD
 export type LambdaExecutableRuntimeLanguages = 'rust';
+=======
+export type LambdaExecutableRuntimeLanguages = 'rust' | 'go';
+>>>>>>> upstream/main
 export type LambdaArchitecture = 'x86_64' | 'arm64';
 
 export interface LambdaOptionsBase {
@@ -202,7 +206,14 @@ export class Lambda {
     }
 
     if (runtimeLanguage !== undefined) {
+<<<<<<< HEAD
       assert(runtimeLanguage === 'rust', '"runtimeLanguage" must be "rust"');
+=======
+      assert(
+        runtimeLanguage === 'rust' || runtimeLanguage === 'go',
+        '"runtimeLanguage" is invalid. Valid options: "rust", "go"'
+      );
+>>>>>>> upstream/main
     }
 
     if (

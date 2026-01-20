@@ -1,6 +1,10 @@
 {
   "name": "@vercel/remix-builder",
+<<<<<<< HEAD
   "version": "5.5.6",
+=======
+  "version": "5.5.9",
+>>>>>>> upstream/main
   "license": "Apache-2.0",
   "main": "./dist/index.js",
   "homepage": "https://vercel.com/docs",
