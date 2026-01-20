@@ -11,6 +11,10 @@ jobs:
   create-pull-request:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,5 +37,5 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const script = require('./utils/update-next.js')
+            const script = require('../../utils/update-next.js')
             await script({ github, context, tag: 'canary' })

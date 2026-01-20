@@ -11,6 +11,10 @@ jobs:
   update-remix-run-dev:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,5 +31,5 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const script = require('./utils/update-remix-run-dev.js')
+            const script = require('../../utils/update-remix-run-dev.js')
             await script({ github, context }, "${{ inputs.new-version }}")
