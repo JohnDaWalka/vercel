@@ -33,3 +33,10 @@ __pycache__
 turbo-cache-key.json
 junit.xml
 **/target/
+
+# Ignore actionlint binary and docs (if accidentally downloaded)
+/actionlint
+/actionlint_*.tar.gz
+/LICENSE.txt
+/docs/
+/man/

@@ -40,7 +40,7 @@ jobs:
       - name: Get pnpm store directory
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
       - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
@@ -82,20 +82,22 @@ jobs:
           echo "TOTAL_COUNT=$TOTAL_COUNT"
           echo "STRATEGY=$STRATEGY"
 
-          echo "strategy=$STRATEGY" >> $GITHUB_OUTPUT
-          echo "packages=$PACKAGES" >> $GITHUB_OUTPUT
-          echo "count=$PACKAGE_COUNT" >> $GITHUB_OUTPUT
-          echo "total=$TOTAL_COUNT" >> $GITHUB_OUTPUT
-          echo "allPackages=$ALL_PACKAGES" >> $GITHUB_OUTPUT
+          {
+            echo "strategy=$STRATEGY"
+            echo "packages=$PACKAGES"
+            echo "count=$PACKAGE_COUNT"
+            echo "total=$TOTAL_COUNT"
+            echo "allPackages=$ALL_PACKAGES"
+          } >> "$GITHUB_OUTPUT"
       - id: set-tests
         run: |
           # Set base SHA for affected package detection
           export TURBO_BASE_SHA="${{ github.event.pull_request.base.sha }}"
 
-          TESTS_ARRAY=$(node utils/chunk-tests.js $SCRIPT_NAME)
+          TESTS_ARRAY=$(node utils/chunk-tests.js "$SCRIPT_NAME")
           echo "Files to test:"
           echo "$TESTS_ARRAY"
-          echo "tests=$TESTS_ARRAY" >> $GITHUB_OUTPUT
+          echo "tests=$TESTS_ARRAY" >> "$GITHUB_OUTPUT"
       - uses: patrickedqvist/wait-for-vercel-preview@bfdff514ff78a669f2536e9f4dd4ef5813a704a2
         id: waitForTarball
         with:
@@ -255,7 +257,7 @@ jobs:
       - name: Get pnpm store directory
         shell: bash
         run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+          echo "STORE_PATH=$(pnpm store path --silent)" >> "$GITHUB_ENV"
 
       - uses: actions/cache@v4
         name: Setup pnpm cache
@@ -287,9 +289,9 @@ jobs:
         id: turbo-summary
         shell: bash
         run: |
-          TURBO_MISS_COUNT=`node utils/determine-turbo-hit-or-miss.js`
+          TURBO_MISS_COUNT=$(node utils/determine-turbo-hit-or-miss.js)
           echo "MISS COUNT: $TURBO_MISS_COUNT"
-          echo "misses=$TURBO_MISS_COUNT" >> $GITHUB_OUTPUT
+          echo "misses=$TURBO_MISS_COUNT" >> "$GITHUB_OUTPUT"
       - name: 'Upload Test Report to Datadog'
         if: ${{ steps['turbo-summary'].outputs.misses != '0' && !cancelled() }}
         run: 'pnpm dlx @datadog/datadog-ci@4.2.2 junit upload --service vercel-cli .junit-reports'
