@@ -124,6 +124,23 @@ async function createPullRequest(
   });
 }
 
+function createAndPushBranch(branch) {
+  const changeset = join(__dirname, '..', '.changeset', `${branch}.md`);
+  writeFileSync(changeset, `---\n---\n\n`, 'utf-8');
+  exec('git', [
+    'config',
+    '--global',
+    'user.email',
+    'infra+release@vercel.com',
+  ]);
+  exec('git', ['config', '--global', 'user.name', 'vercel-release-bot']);
+  exec('git', ['checkout', 'dev']);
+  exec('git', ['checkout', '-b', branch]);
+  exec('git', ['add', '-A']);
+  exec('git', ['commit', '-m', branch]);
+  exec('git', ['push', 'origin', branch]);
+}
+
 function updateExamples(github, newVersion, branch) {
   let updatedCount = 0;
 
@@ -131,22 +148,8 @@ function updateExamples(github, newVersion, branch) {
     .next;
   if (github && oldVersion !== newVersion) {
     updatedCount++;
-    const changeset = join(__dirname, '..', '.changeset', `${branch}.md`);
-    writeFileSync(changeset, `---\n---\n\n`, 'utf-8');
     exec('rm', ['-rf', './examples/nextjs']);
     exec('npx', ['--yes', 'create-next-app@latest', './examples/nextjs']);
-    exec('git', [
-      'config',
-      '--global',
-      'user.email',
-      'infra+release@vercel.com',
-    ]);
-    exec('git', ['config', '--global', 'user.name', 'vercel-release-bot']);
-    exec('git', ['checkout', 'dev']);
-    exec('git', ['checkout', '-b', branch]);
-    exec('git', ['add', '-A']);
-    exec('git', ['commit', '-m', branch]);
-    exec('git', ['push', 'origin', branch]);
   }
 
   return updatedCount;
@@ -213,6 +216,11 @@ module.exports = async ({ github, context, tag } = {}) => {
       updatedCount === 1 ? '' : 's'
     } to Next.js version ${newVersion}`
   );
+
+  // Create and push the branch with the updates
+  if (github) {
+    createAndPushBranch(branch);
+  }
 
   await createPullRequest(
     github,
