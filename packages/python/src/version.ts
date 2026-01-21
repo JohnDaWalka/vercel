@@ -9,11 +9,6 @@ interface PythonVersion {
   discontinueDate?: Date;
 }
 
-<<<<<<< HEAD
-// The order must be most recent first
-const allOptions: PythonVersion[] = [
-  {
-=======
 export const DEFAULT_PYTHON_VERSION = '3.12';
 
 // The order must be most recent first
@@ -31,7 +26,6 @@ const allOptions: PythonVersion[] = [
     runtime: 'python3.13',
   },
   {
->>>>>>> upstream/main
     version: '3.12',
     pipPath: 'pip3.12',
     pythonPath: 'python3.12',
@@ -83,8 +77,6 @@ export function getLatestPythonVersion({
     return getDevPythonVersion();
   }
 
-<<<<<<< HEAD
-=======
   // When no version is explicitly specified use default version
   const defaultOption = allOptions.find(
     opt => opt.version === DEFAULT_PYTHON_VERSION
@@ -94,16 +86,11 @@ export function getLatestPythonVersion({
   }
 
   // Fallback to the latest installed version if the default isn't available
->>>>>>> upstream/main
   const selection = allOptions.find(isInstalled);
   if (!selection) {
     throw new NowBuildError({
       code: 'PYTHON_NOT_FOUND',
-<<<<<<< HEAD
-      link: 'http://vercel.link/python-version',
-=======
       link: 'https://vercel.link/python-version',
->>>>>>> upstream/main
       message: `Unable to find any supported Python versions.`,
     });
   }
@@ -244,11 +231,7 @@ export function getSupportedPythonVersion({
       if (isDiscontinued(requested)) {
         throw new NowBuildError({
           code: 'BUILD_UTILS_PYTHON_VERSION_DISCONTINUED',
-<<<<<<< HEAD
-          link: 'http://vercel.link/python-version',
-=======
           link: 'https://vercel.link/python-version',
->>>>>>> upstream/main
           message: `Python version "${requested.version}" detected in ${source} is discontinued and must be upgraded.`,
         });
       }
@@ -258,11 +241,7 @@ export function getSupportedPythonVersion({
         console.log(`Using Python ${selection.version} from ${source}`);
       } else {
         console.warn(
-<<<<<<< HEAD
-          `Warning: Python version "${version}" detected in ${source} is not installed and will be ignored. http://vercel.link/python-version`
-=======
           `Warning: Python version "${version}" detected in ${source} is not installed and will be ignored. https://vercel.link/python-version`
->>>>>>> upstream/main
         );
         console.log(
           `Falling back to latest installed version: ${selection.version}`
@@ -270,11 +249,7 @@ export function getSupportedPythonVersion({
       }
     } else {
       console.warn(
-<<<<<<< HEAD
-        `Warning: Python version "${version}" detected in ${source} is invalid and will be ignored. http://vercel.link/python-version`
-=======
         `Warning: Python version "${version}" detected in ${source} is invalid and will be ignored. https://vercel.link/python-version`
->>>>>>> upstream/main
       );
       console.log(
         `Falling back to latest installed version: ${selection.version}`
@@ -289,11 +264,7 @@ export function getSupportedPythonVersion({
   if (isDiscontinued(selection)) {
     throw new NowBuildError({
       code: 'BUILD_UTILS_PYTHON_VERSION_DISCONTINUED',
-<<<<<<< HEAD
-      link: 'http://vercel.link/python-version',
-=======
       link: 'https://vercel.link/python-version',
->>>>>>> upstream/main
       message: `Python version "${selection.version}" declared in project configuration is discontinued and must be upgraded.`,
     });
   }
@@ -304,11 +275,7 @@ export function getSupportedPythonVersion({
       ? `detected in ${declaredPythonVersion.source}`
       : 'selected by runtime';
     console.warn(
-<<<<<<< HEAD
-      `Error: Python version "${selection.version}" ${srcSuffix} has reached End-of-Life. Deployments created on or after ${d} will fail to build. http://vercel.link/python-version`
-=======
       `Error: Python version "${selection.version}" ${srcSuffix} has reached End-of-Life. Deployments created on or after ${d} will fail to build. https://vercel.link/python-version`
->>>>>>> upstream/main
     );
   }
 

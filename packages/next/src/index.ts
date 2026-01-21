@@ -12,10 +12,6 @@ import {
   getLambdaOptionsFromFunction,
   getNodeVersion,
   getPrefixedEnvVars,
-<<<<<<< HEAD
-  getSpawnOptions,
-=======
->>>>>>> upstream/main
   getScriptName,
   glob,
   runNpmInstall,
@@ -50,10 +46,7 @@ import findUp from 'find-up';
 import {
   lstat,
   pathExists,
-<<<<<<< HEAD
-=======
   readdir,
->>>>>>> upstream/main
   readFile,
   readJSON,
   remove,
@@ -277,10 +270,6 @@ export const build: BuildV2 = async buildOptions => {
   let pkg = await readPackageJson(entryPath);
   const nextVersionRange = await getNextVersionRange(entryPath);
   const nodeVersion = await getNodeVersion(entryPath, undefined, config, meta);
-<<<<<<< HEAD
-  const spawnOpts = getSpawnOptions(meta, nodeVersion);
-=======
->>>>>>> upstream/main
   const {
     cliType,
     lockfileVersion,
@@ -288,19 +277,11 @@ export const build: BuildV2 = async buildOptions => {
     turboSupportsCorepackHome,
   } = await scanParentDirs(entryPath, true);
 
-<<<<<<< HEAD
-  spawnOpts.env = getEnvForPackageManager({
-    cliType,
-    lockfileVersion,
-    packageJsonPackageManager,
-    env: spawnOpts.env || {},
-=======
   const spawnEnv = getEnvForPackageManager({
     cliType,
     lockfileVersion,
     packageJsonPackageManager,
     env: process.env,
->>>>>>> upstream/main
     turboSupportsCorepackHome,
     projectCreatedAt: config.projectSettings?.createdAt,
   });
@@ -401,22 +382,14 @@ export const build: BuildV2 = async buildOptions => {
           );
 
           await execCommand(trimmedInstallCommand, {
-<<<<<<< HEAD
-            ...spawnOpts,
-=======
             env: spawnEnv,
->>>>>>> upstream/main
             cwd: entryPath,
           });
         } else {
           await runNpmInstall(
             entryPath,
             [],
-<<<<<<< HEAD
-            spawnOpts,
-=======
             { env: spawnEnv },
->>>>>>> upstream/main
             meta,
             config.projectSettings?.createdAt
           );
@@ -426,11 +399,7 @@ export const build: BuildV2 = async buildOptions => {
     console.log(`Skipping "install" command...`);
   }
 
-<<<<<<< HEAD
-  if (spawnOpts.env.VERCEL_ANALYTICS_ID) {
-=======
   if (spawnEnv.VERCEL_ANALYTICS_ID) {
->>>>>>> upstream/main
     debug('Found VERCEL_ANALYTICS_ID in environment');
 
     const version = await getInstalledPackageVersion(
@@ -442,11 +411,7 @@ export const build: BuildV2 = async buildOptions => {
       // Next.js has a built-in integration with Vercel Speed Insights
       // with the new @vercel/speed-insights package this is no longer needed
       // and can be removed to avoid duplicate events
-<<<<<<< HEAD
-      delete spawnOpts.env.VERCEL_ANALYTICS_ID;
-=======
       delete spawnEnv.VERCEL_ANALYTICS_ID;
->>>>>>> upstream/main
       delete process.env.VERCEL_ANALYTICS_ID;
 
       debug(
@@ -522,11 +487,7 @@ export const build: BuildV2 = async buildOptions => {
     target = await createServerlessConfig(workPath, entryPath, nextVersion);
   }
 
-<<<<<<< HEAD
-  const env: typeof process.env = { ...spawnOpts.env };
-=======
   const env: typeof process.env = { ...spawnEnv };
->>>>>>> upstream/main
   env.NEXT_EDGE_RUNTIME_PROVIDER = 'vercel';
 
   if (target) {
@@ -581,10 +542,6 @@ export const build: BuildV2 = async buildOptions => {
 
           console.log(`Running "${buildCommand}"`);
           await execCommand(buildCommand, {
-<<<<<<< HEAD
-            ...spawnOpts,
-=======
->>>>>>> upstream/main
             cwd: entryPath,
             env,
           });
@@ -593,10 +550,6 @@ export const build: BuildV2 = async buildOptions => {
             entryPath,
             buildScriptName,
             {
-<<<<<<< HEAD
-              ...spawnOpts,
-=======
->>>>>>> upstream/main
               env,
             },
             config.projectSettings?.createdAt
@@ -616,11 +569,7 @@ export const build: BuildV2 = async buildOptions => {
 
   try {
     const data = await readJSON(
-<<<<<<< HEAD
-      path.join(outputDirectory, 'output/config.json')
-=======
       path.join(entryPath, outputDirectory, 'output/config.json')
->>>>>>> upstream/main
     );
     buildOutputVersion = data.version;
   } catch (_) {
@@ -634,8 +583,6 @@ export const build: BuildV2 = async buildOptions => {
     } as BuildResultBuildOutput;
   }
 
-<<<<<<< HEAD
-=======
   // Validate that the output directory exists and has content before reading manifests
   const absoluteOutputDirectory = path.join(entryPath, outputDirectory);
   const outputDirExists = await pathExists(absoluteOutputDirectory);
@@ -670,7 +617,6 @@ export const build: BuildV2 = async buildOptions => {
     });
   }
 
->>>>>>> upstream/main
   let appMountPrefixNoTrailingSlash = path.posix
     .join('/', entryDirectory)
     .replace(/\/+$/, '');
@@ -753,10 +699,7 @@ export const build: BuildV2 = async buildOptions => {
   let hasPages404 = false;
   let buildId = '';
   let escapedBuildId = '';
-<<<<<<< HEAD
-=======
   let deploymentId: string | undefined;
->>>>>>> upstream/main
 
   if (isLegacy || isSharedLambdas || isServerMode) {
     try {
@@ -774,15 +717,12 @@ export const build: BuildV2 = async buildOptions => {
     }
   }
 
-<<<<<<< HEAD
-=======
   // Read user-configured deploymentId from routes-manifest.json
   // This is the standard location for build metadata in Next.js
   if (routesManifest?.deploymentId) {
     deploymentId = routesManifest.deploymentId;
   }
 
->>>>>>> upstream/main
   if (routesManifest) {
     switch (routesManifest.version) {
       case 1:
@@ -1175,10 +1115,7 @@ export const build: BuildV2 = async buildOptions => {
           : []),
       ],
       framework: { version: nextVersion },
-<<<<<<< HEAD
-=======
       ...(deploymentId && { deploymentId }),
->>>>>>> upstream/main
     };
   }
 
@@ -1187,13 +1124,9 @@ export const build: BuildV2 = async buildOptions => {
     await runNpmInstall(
       entryPath,
       ['--production'],
-<<<<<<< HEAD
-      spawnOpts,
-=======
       {
         env: spawnEnv,
       },
->>>>>>> upstream/main
       meta,
       config.projectSettings?.createdAt
     );
@@ -3001,10 +2934,7 @@ export const build: BuildV2 = async buildOptions => {
           ]),
     ],
     framework: { version: nextVersion },
-<<<<<<< HEAD
-=======
     ...(deploymentId && { deploymentId }),
->>>>>>> upstream/main
   };
 };
 
