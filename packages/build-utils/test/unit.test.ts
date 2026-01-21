@@ -12,10 +12,7 @@ import {
   runNpmInstall,
   runPackageJsonScript,
   scanParentDirs,
-<<<<<<< HEAD
-=======
   findPackageJson,
->>>>>>> upstream/main
   Prerender,
 } from '../src';
 import type { Files } from '../src';
@@ -211,11 +208,7 @@ it('should prefer package.json engines over project setting from config and warn
     )
   ).toHaveProperty('range', '22.x');
   expect(warningMessages).toStrictEqual([
-<<<<<<< HEAD
-    'Warning: Due to "engines": { "node": "22.x" } in your `package.json` file, the Node.js Version defined in your Project Settings ("12.x") will not apply, Node.js Version "22.x" will be used instead. Learn More: http://vercel.link/node-version',
-=======
     'Warning: Due to "engines": { "node": "22.x" } in your `package.json` file, the Node.js Version defined in your Project Settings ("12.x") will not apply, Node.js Version "22.x" will be used instead. Learn More: https://vercel.link/node-version',
->>>>>>> upstream/main
   ]);
 });
 
@@ -229,11 +222,7 @@ it('should warn when package.json engines is exact version', async () => {
     )
   ).toHaveProperty('range', '22.x');
   expect(warningMessages).toStrictEqual([
-<<<<<<< HEAD
-    'Warning: Detected "engines": { "node": "22.11.0" } in your `package.json` with major.minor.patch, but only major Node.js Version can be selected. Learn More: http://vercel.link/node-version',
-=======
     'Warning: Detected "engines": { "node": "22.11.0" } in your `package.json` with major.minor.patch, but only major Node.js Version can be selected. Learn More: https://vercel.link/node-version',
->>>>>>> upstream/main
   ]);
 });
 
@@ -247,11 +236,7 @@ it('should warn when package.json engines is greater than', async () => {
     )
   ).toHaveProperty('range', '24.x');
   expect(warningMessages).toStrictEqual([
-<<<<<<< HEAD
-    'Warning: Detected "engines": { "node": ">=16" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version',
-=======
     'Warning: Detected "engines": { "node": ">=16" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: https://vercel.link/node-version',
->>>>>>> upstream/main
   ]);
 });
 
@@ -265,13 +250,8 @@ it('should warn when project settings gets overrided', async () => {
     )
   ).toHaveProperty('range', '24.x');
   expect(warningMessages).toStrictEqual([
-<<<<<<< HEAD
-    'Warning: Due to "engines": { "node": ">=16" } in your `package.json` file, the Node.js Version defined in your Project Settings ("16.x") will not apply, Node.js Version "24.x" will be used instead. Learn More: http://vercel.link/node-version',
-    'Warning: Detected "engines": { "node": ">=16" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: http://vercel.link/node-version',
-=======
     'Warning: Due to "engines": { "node": ">=16" } in your `package.json` file, the Node.js Version defined in your Project Settings ("16.x") will not apply, Node.js Version "24.x" will be used instead. Learn More: https://vercel.link/node-version',
     'Warning: Detected "engines": { "node": ">=16" } in your `package.json` that will automatically upgrade when a new major Node.js Version is released. Learn More: https://vercel.link/node-version',
->>>>>>> upstream/main
   ]);
 });
 
@@ -1020,8 +1000,6 @@ it('should detect `packageManager` in pnpm monorepo', async () => {
   }
 });
 
-<<<<<<< HEAD
-=======
 describe('findPackageJson', () => {
   it('should find package.json and return path without reading contents', async () => {
     const fixture = path.join(__dirname, 'fixtures', '20-npm-7');
@@ -1062,7 +1040,6 @@ describe('findPackageJson', () => {
   });
 });
 
->>>>>>> upstream/main
 it('should retry npm install when peer deps invalid and npm@8 on node@16', async () => {
   const nodeMajor = Number(process.versions.node.split('.')[0]);
   if (nodeMajor !== 16) {

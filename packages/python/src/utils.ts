@@ -6,49 +6,6 @@ import execa from 'execa';
 
 const isWin = process.platform === 'win32';
 
-<<<<<<< HEAD
-=======
-export const UV_PYTHON_DOWNLOADS_MODE = 'automatic';
-
->>>>>>> upstream/main
-export const isInVirtualEnv = (): string | undefined => {
-  return process.env.VIRTUAL_ENV;
-};
-
-export function getVenvBinDir(venvPath: string) {
-  return join(venvPath, isWin ? 'Scripts' : 'bin');
-}
-
-export function useVirtualEnv(
-  workPath: string,
-  env: NodeJS.ProcessEnv,
-  systemPython: string
-): { pythonCmd: string; venvRoot?: string } {
-  const venvDirs = ['.venv', 'venv'];
-  let pythonCmd = systemPython;
-  for (const venv of venvDirs) {
-    const venvRoot = join(workPath, venv);
-    const binDir =
-      process.platform === 'win32'
-        ? join(venvRoot, 'Scripts')
-        : join(venvRoot, 'bin');
-    const candidates =
-      process.platform === 'win32'
-        ? [join(binDir, 'python.exe'), join(binDir, 'python')]
-        : [join(binDir, 'python3'), join(binDir, 'python')];
-    const found = candidates.find(p => fs.existsSync(p));
-    if (found) {
-      pythonCmd = found;
-      env.VIRTUAL_ENV = venvRoot;
-      env.PATH = `${binDir}${pathDelimiter}${env.PATH || ''}`;
-      return { pythonCmd, venvRoot };
-    }
-  }
-  return { pythonCmd };
-}
-
-<<<<<<< HEAD
-=======
 export function getProtectedUvEnv(
   baseEnv: NodeJS.ProcessEnv = process.env
 ): NodeJS.ProcessEnv {
@@ -58,19 +15,14 @@ export function getProtectedUvEnv(
   };
 }
 
->>>>>>> upstream/main
 export function createVenvEnv(
   venvPath: string,
   baseEnv: NodeJS.ProcessEnv = process.env
 ): NodeJS.ProcessEnv {
-<<<<<<< HEAD
-  const env: NodeJS.ProcessEnv = { ...baseEnv, VIRTUAL_ENV: venvPath };
-=======
   const env: NodeJS.ProcessEnv = {
     ...getProtectedUvEnv(baseEnv),
     VIRTUAL_ENV: venvPath,
   };
->>>>>>> upstream/main
   const binDir = getVenvBinDir(venvPath);
   const existingPath = env.PATH || process.env.PATH || '';
   env.PATH = existingPath ? `${binDir}${pathDelimiter}${existingPath}` : binDir;

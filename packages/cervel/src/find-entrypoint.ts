@@ -54,9 +54,6 @@ export const findEntrypoint = async (
   );
 
   if (!framework) {
-<<<<<<< HEAD
-    throw new Error('No framework found in package.json');
-=======
     for (const entrypoint of entrypoints) {
       const entrypointPath = join(cwd, entrypoint);
       try {
@@ -67,7 +64,6 @@ export const findEntrypoint = async (
       }
     }
     throw new Error('No entrypoint or framework found');
->>>>>>> upstream/main
   }
 
   const regex = createFrameworkRegex(framework);

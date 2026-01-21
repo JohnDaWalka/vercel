@@ -1,7 +1,5 @@
 # @vercel/build-utils
 
-<<<<<<< HEAD
-=======
 ## 13.2.13
 
 ### Patch Changes
@@ -56,7 +54,6 @@
 
 - skip secondary installation for vercel.ts ([#14471](https://github.com/vercel/vercel/pull/14471))
 
->>>>>>> upstream/main
 ## 13.2.4
 
 ### Patch Changes

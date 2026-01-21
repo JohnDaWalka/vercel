@@ -1,7 +1,5 @@
 # @vercel/remix-builder
 
-<<<<<<< HEAD
-=======
 ## 5.5.9
 
 ### Patch Changes
@@ -20,7 +18,6 @@
 
 - Replace getNodeVersion with getRuntimeNodeVersion ([#14600](https://github.com/vercel/vercel/pull/14600))
 
->>>>>>> upstream/main
 ## 5.5.6
 
 ### Patch Changes

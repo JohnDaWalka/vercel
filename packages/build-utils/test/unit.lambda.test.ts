@@ -373,8 +373,6 @@ describe('Lambda', () => {
       expect(lambda.runtimeLanguage).toBe('rust');
     });
 
-<<<<<<< HEAD
-=======
     it('should create Lambda with valid runtimeLanguage (go)', () => {
       const files: Files = {};
       const lambda = new Lambda({
@@ -387,7 +385,6 @@ describe('Lambda', () => {
       expect(lambda.runtimeLanguage).toBe('go');
     });
 
->>>>>>> upstream/main
     it('should create Lambda without runtimeLanguage', () => {
       const files: Files = {};
       const lambda = new Lambda({
@@ -409,11 +406,7 @@ describe('Lambda', () => {
             runtime: 'provided.al2',
             runtimeLanguage: 'python' as any,
           })
-<<<<<<< HEAD
-      ).toThrow('"runtimeLanguage" must be "rust"');
-=======
       ).toThrow('"runtimeLanguage" is invalid. Valid options: "rust", "go"');
->>>>>>> upstream/main
     });
 
     it('should throw error for invalid runtimeLanguage (number)', () => {
@@ -426,11 +419,7 @@ describe('Lambda', () => {
             runtime: 'provided.al2',
             runtimeLanguage: 123 as any,
           })
-<<<<<<< HEAD
-      ).toThrow('"runtimeLanguage" must be "rust"');
-=======
       ).toThrow('"runtimeLanguage" is invalid. Valid options: "rust", "go"');
->>>>>>> upstream/main
     });
 
     it('should throw error for invalid runtimeLanguage (empty string)', () => {
@@ -443,11 +432,7 @@ describe('Lambda', () => {
             runtime: 'provided.al2',
             runtimeLanguage: '' as any,
           })
-<<<<<<< HEAD
-      ).toThrow('"runtimeLanguage" must be "rust"');
-=======
       ).toThrow('"runtimeLanguage" is invalid. Valid options: "rust", "go"');
->>>>>>> upstream/main
     });
   });
 });

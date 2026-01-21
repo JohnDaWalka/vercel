@@ -98,58 +98,8 @@ export type RouteWithSrc = {
    * A middleware index in the `middleware` key under the build result
    */
   middleware?: number;
-<<<<<<< HEAD
-=======
   respectOriginCacheControl?: boolean;
->>>>>>> upstream/main
 };
-
-export type RouteWithHandle = {
-  handle: HandleValue;
-  src?: string;
-  dest?: string;
-  status?: number;
-};
-
-export type Route = RouteWithSrc | RouteWithHandle;
-
-export type NormalizedRoutes = {
-  routes: Route[] | null;
-  error: RouteApiError | null;
-};
-
-export interface GetRoutesProps {
-  routes?: Route[];
-  cleanUrls?: boolean;
-  rewrites?: Rewrite[];
-  redirects?: Redirect[];
-  headers?: Header[];
-  trailingSlash?: boolean;
-}
-
-export interface MergeRoutesProps {
-  userRoutes?: Route[] | null | undefined;
-  builds: Build[];
-}
-
-export interface Build {
-  use: string;
-  entrypoint: string;
-  routes?: Route[];
-}
-
-export interface Rewrite {
-  source: string;
-  destination: string;
-  has?: HasField;
-  missing?: HasField;
-  statusCode?: number;
-  env?: string[];
-<<<<<<< HEAD
-=======
-  respectOriginCacheControl?: boolean;
->>>>>>> upstream/main
-}
 
 export interface Redirect {
   source: string;

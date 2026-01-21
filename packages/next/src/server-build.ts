@@ -2799,27 +2799,9 @@ export async function serverBuild({
               dest: path.posix.join('/', entryDirectory, '/$nextLocale/404'),
               status: 404,
               caseSensitive: true,
-<<<<<<< HEAD
-=======
               headers: {
                 'x-next-error-status': '404',
               },
->>>>>>> upstream/main
-            },
-            {
-              src: path.posix.join('/', entryDirectory, '.*'),
-              dest: path.posix.join(
-                '/',
-                entryDirectory,
-                `/${i18n.defaultLocale}/404`
-              ),
-              status: 404,
-<<<<<<< HEAD
-=======
-              headers: {
-                'x-next-error-status': '404',
-              },
->>>>>>> upstream/main
             },
           ]
         : [
@@ -2846,35 +2828,9 @@ export async function serverBuild({
                     : '/_error'
               ),
               status: 404,
-<<<<<<< HEAD
-=======
-              headers: {
-                'x-next-error-status': '404',
-              },
->>>>>>> upstream/main
-            },
-          ]),
-
-      // custom 500 page if present
-      ...(i18n && (hasStatic500 || hasIsr500Page || lambdaPages['500.js'])
-        ? [
-            {
-              src: `${path.posix.join(
-                '/',
-                entryDirectory,
-                '/'
-              )}(?<nextLocale>${i18n.locales
-                .map(locale => escapeStringRegexp(locale))
-                .join('|')})(/.*|$)`,
-              dest: path.posix.join('/', entryDirectory, '/$nextLocale/500'),
-              status: 500,
-              caseSensitive: true,
-<<<<<<< HEAD
-=======
               headers: {
                 'x-next-error-status': '500',
               },
->>>>>>> upstream/main
             },
             {
               src: path.posix.join('/', entryDirectory, '.*'),
@@ -2884,40 +2840,9 @@ export async function serverBuild({
                 `/${i18n.defaultLocale}/500`
               ),
               status: 500,
-<<<<<<< HEAD
-=======
               headers: {
                 'x-next-error-status': '500',
               },
->>>>>>> upstream/main
-            },
-          ]
-        : [
-            {
-              src: path.posix.join(
-                '/',
-                entryDirectory,
-                // if entryDirectory is populated we need to
-                // add optional handling for trailing slash so
-                // that the entryDirectory (basePath) itself matches
-                `${entryDirectory !== '.' ? '?' : ''}.*`
-              ),
-              dest: path.posix.join(
-                '/',
-                entryDirectory,
-                hasStatic500 ||
-                  hasIsr500Page ||
-                  lambdas[path.posix.join(entryDirectory, '500')]
-                  ? '/500'
-                  : '/_error'
-              ),
-              status: 500,
-<<<<<<< HEAD
-=======
-              headers: {
-                'x-next-error-status': '500',
-              },
->>>>>>> upstream/main
             },
           ]),
     ],

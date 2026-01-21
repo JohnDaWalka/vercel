@@ -14,10 +14,7 @@ import {
   NowBuildError,
   runNpmInstall,
   runCustomInstallCommand,
-<<<<<<< HEAD
-=======
   resetCustomInstallCommandSet,
->>>>>>> upstream/main
   type Reporter,
   Span,
   type TraceEvent,
@@ -88,10 +85,7 @@ import {
 import readJSONFile from '../../util/read-json-file';
 import { BuildTelemetryClient } from '../../util/telemetry/commands/build';
 import { validateConfig } from '../../util/validate-config';
-<<<<<<< HEAD
-=======
 import { validateCronSecret } from '../../util/validate-cron-secret';
->>>>>>> upstream/main
 import {
   compileVercelConfig,
   findSourceVercelConfigFile,
@@ -124,10 +118,7 @@ interface BuildOutputConfig {
     version: string;
   };
   crons?: Cron[];
-<<<<<<< HEAD
-=======
   deploymentId?: string;
->>>>>>> upstream/main
 }
 
 /**
@@ -400,15 +391,12 @@ export default async function main(client: Client): Promise<number> {
     for (const key of envToUnset) {
       delete process.env[key];
     }
-<<<<<<< HEAD
-=======
 
     // Clean up VERCEL_INSTALL_COMPLETED to allow subsequent builds in the same process
     delete process.env.VERCEL_INSTALL_COMPLETED;
 
     // Reset customInstallCommandSet to allow subsequent builds in the same process
     resetCustomInstallCommandSet();
->>>>>>> upstream/main
   }
 }
 
@@ -427,12 +415,9 @@ async function doBuild(
 ): Promise<void> {
   const { localConfigPath } = client;
 
-<<<<<<< HEAD
-=======
   // Regex pattern for validating deploymentId characters: alphanumeric, hyphen, underscore
   const VALID_DEPLOYMENT_ID_PATTERN = /^[a-zA-Z0-9_-]+$/;
 
->>>>>>> upstream/main
   const workPath = join(cwd, project.settings.rootDirectory || '.');
 
   const sourceConfigFile = await findSourceVercelConfigFile(workPath);
@@ -463,10 +448,7 @@ async function doBuild(
         project.settings.createdAt
       );
     }
-<<<<<<< HEAD
-=======
     process.env.VERCEL_INSTALL_COMPLETED = '1';
->>>>>>> upstream/main
   }
 
   const compileResult = await compileVercelConfig(workPath);
@@ -509,8 +491,6 @@ async function doBuild(
     throw validateError;
   }
 
-<<<<<<< HEAD
-=======
   // Validate CRON_SECRET if crons are defined
   if (localConfig.crons && localConfig.crons.length > 0) {
     const cronSecretError = validateCronSecret(process.env.CRON_SECRET);
@@ -519,7 +499,6 @@ async function doBuild(
     }
   }
 
->>>>>>> upstream/main
   if (localConfig.customErrorPage) {
     const errorPages =
       typeof localConfig.customErrorPage === 'string'
@@ -756,12 +735,8 @@ async function doBuild(
             // not for static builders (which handle public/ directories)
             if (
               shouldUseExperimentalBackends(buildConfig.framework) &&
-<<<<<<< HEAD
-              builderPkg.name !== '@vercel/static'
-=======
               builderPkg.name !== '@vercel/static' &&
               isBackendBuilder(build)
->>>>>>> upstream/main
             ) {
               const experimentalBackendBuilder = await import(
                 '@vercel/backends'
@@ -981,8 +956,6 @@ async function doBuild(
     throw existingConfig;
   }
   if (existingConfig) {
-<<<<<<< HEAD
-=======
     // Validate deploymentId if present (user-configured for skew protection)
     if (
       'deploymentId' in existingConfig &&
@@ -1013,7 +986,6 @@ async function doBuild(
       }
     }
 
->>>>>>> upstream/main
     if (existingConfig.overrides) {
       overrides.push(existingConfig.overrides);
     }
@@ -1053,8 +1025,6 @@ async function doBuild(
   const mergedImages = mergeImages(localConfig.images, buildResults.values());
   const mergedCrons = mergeCrons(localConfig.crons, buildResults.values());
   const mergedWildcard = mergeWildcard(buildResults.values());
-<<<<<<< HEAD
-=======
   const mergedDeploymentId = await mergeDeploymentId(
     existingConfig?.deploymentId,
     buildResults.values(),
@@ -1087,7 +1057,6 @@ async function doBuild(
     }
   }
 
->>>>>>> upstream/main
   const mergedOverrides: Record<string, PathOverride> =
     overrides.length > 0 ? Object.assign({}, ...overrides) : undefined;
 
@@ -1103,10 +1072,7 @@ async function doBuild(
     overrides: mergedOverrides,
     framework,
     crons: mergedCrons,
-<<<<<<< HEAD
-=======
     ...(mergedDeploymentId && { deploymentId: mergedDeploymentId }),
->>>>>>> upstream/main
   };
   await fs.writeJSON(join(outputDir, 'config.json'), config, { spaces: 2 });
 
@@ -1244,8 +1210,6 @@ function mergeWildcard(
   return wildcard;
 }
 
-<<<<<<< HEAD
-=======
 async function mergeDeploymentId(
   existingDeploymentId: string | undefined,
   buildResults: Iterable<BuildResult | BuildOutputConfig>,
@@ -1281,7 +1245,6 @@ async function mergeDeploymentId(
   return undefined;
 }
 
->>>>>>> upstream/main
 /**
  * Takes the build output and writes all the flags into the `flags.json`
  * file. It'll skip flags that already exist.

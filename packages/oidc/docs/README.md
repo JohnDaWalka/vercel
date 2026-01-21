@@ -101,8 +101,4 @@ The OIDC token.
 
 #### Defined in
 
-<<<<<<< HEAD
-[get-vercel-oidc-token.ts:81](https://github.com/vercel/vercel/blob/main/packages/oidc/src/get-vercel-oidc-token.ts#L81)
-=======
 [get-vercel-oidc-token.ts:85](https://github.com/vercel/vercel/blob/main/packages/oidc/src/get-vercel-oidc-token.ts#L85)
->>>>>>> upstream/main

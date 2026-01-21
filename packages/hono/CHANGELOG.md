@@ -1,7 +1,5 @@
 # @vercel/hono
 
-<<<<<<< HEAD
-=======
 ## 0.2.27
 
 ### Patch Changes
@@ -71,7 +69,6 @@
 - Updated dependencies []:
   - @vercel/node@5.5.17
 
->>>>>>> upstream/main
 ## 0.2.18
 
 ### Patch Changes

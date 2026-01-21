@@ -232,11 +232,7 @@ export const getStoreSubcommand = {
 export const storeSubcommand = {
   name: 'store',
   aliases: [],
-<<<<<<< HEAD
-  description: 'Interact with Blob stores',
-=======
   description: 'Manage or create a Blob store',
->>>>>>> upstream/main
   arguments: [],
   subcommands: [addStoreSubcommand, removeStoreSubcommand, getStoreSubcommand],
   options: [],

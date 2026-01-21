@@ -38,16 +38,10 @@ import chalk from 'chalk';
 import epipebomb from 'epipebomb';
 import getLatestVersion from './util/get-latest-version';
 import { URL } from 'url';
-<<<<<<< HEAD
-import * as Sentry from '@sentry/node';
-import hp from './util/humanize-path';
-import { commands } from './commands';
-=======
 import { getSentry } from './util/get-sentry';
 import hp from './util/humanize-path';
 import { commands, commandNames } from './commands';
 import { handleCommandTypo } from './util/handle-command-typo';
->>>>>>> upstream/main
 import pkg from './util/pkg';
 import cmd from './util/output/cmd';
 import param from './util/output/param';
@@ -67,13 +61,8 @@ import {
 } from './util/config/get-default';
 import * as ERRORS from './util/errors-ts';
 import { APIError } from './util/errors-ts';
-<<<<<<< HEAD
-import { SENTRY_DSN } from './util/constants';
-import getUpdateCommand from './util/get-update-command';
-=======
 import getUpdateCommand from './util/get-update-command';
 import { executeUpgrade } from './util/upgrade';
->>>>>>> upstream/main
 import { getCommandName, getTitleName } from './util/pkg-name';
 import login from './commands/login';
 import type { AuthConfig, GlobalConfig } from '@vercel-internals/types';
@@ -104,17 +93,6 @@ const GLOBAL_COMMANDS = new Set(['help']);
 */
 epipebomb();
 
-<<<<<<< HEAD
-// Configure the error reporting system
-Sentry.init({
-  dsn: SENTRY_DSN,
-  release: `vercel-cli@${pkg.version}`,
-  environment: 'stable',
-});
-
-let client: Client;
-
-=======
 let client: Client;
 
 // Register global error handlers early to catch errors during initialization.
@@ -152,7 +130,6 @@ const handleUnexpected = async (err: Error) => {
 process.on('unhandledRejection', handleRejection);
 process.on('uncaughtException', handleUnexpected);
 
->>>>>>> upstream/main
 let { isTTY } = process.stdout;
 
 let apiUrl = 'https://api.vercel.com';
@@ -435,10 +412,7 @@ const main = async () => {
     'init',
     'build',
     'telemetry',
-<<<<<<< HEAD
-=======
     'upgrade',
->>>>>>> upstream/main
   ];
 
   if (process.env.FF_GUIDANCE_MODE) {
@@ -640,8 +614,6 @@ const main = async () => {
         telemetry.trackCliExtension();
       } catch (err: unknown) {
         if (isErrnoException(err) && err.code === 'ENOENT') {
-<<<<<<< HEAD
-=======
           // Check if the user made a typo before falling back to deploy
           if (
             handleCommandTypo({
@@ -651,7 +623,6 @@ const main = async () => {
           ) {
             return 1;
           }
->>>>>>> upstream/main
           // Fall back to `vc deploy <dir>`
           targetCommand = subcommand = 'deploy';
         } else {
@@ -829,13 +800,10 @@ const main = async () => {
           telemetry.trackCliCommandTelemetry(userSuppliedSubCommand);
           func = require('./commands/telemetry').default;
           break;
-<<<<<<< HEAD
-=======
         case 'upgrade':
           telemetry.trackCliCommandUpgrade(userSuppliedSubCommand);
           func = require('./commands/upgrade').default;
           break;
->>>>>>> upstream/main
         case 'whoami':
           telemetry.trackCliCommandWhoami(userSuppliedSubCommand);
           func = require('./commands/whoami').default;
@@ -846,10 +814,6 @@ const main = async () => {
       }
 
       if (!func || !targetCommand) {
-<<<<<<< HEAD
-        const sub = param(subcommand);
-        output.error(`The ${sub} subcommand does not exist`);
-=======
         if (
           !handleCommandTypo({
             command: subcommand,
@@ -858,7 +822,6 @@ const main = async () => {
         ) {
           output.error(`The ${param(subcommand)} subcommand does not exist`);
         }
->>>>>>> upstream/main
         return 1;
       }
 
@@ -926,11 +889,7 @@ const main = async () => {
       }
       output.prettyError(err);
     } else {
-<<<<<<< HEAD
-      await reportError(Sentry, client, err);
-=======
       await reportError(getSentry(), client, err);
->>>>>>> upstream/main
 
       // Otherwise it is an unexpected error and we should show the trace
       // and an unexpected error message
@@ -946,42 +905,6 @@ const main = async () => {
   return exitCode;
 };
 
-<<<<<<< HEAD
-const handleRejection = async (err: any) => {
-  if (err) {
-    if (err instanceof Error) {
-      await handleUnexpected(err);
-    } else {
-      output.error(`An unexpected rejection occurred\n  ${err}`);
-      await reportError(Sentry, client, err);
-    }
-  } else {
-    output.error('An unexpected empty rejection occurred');
-  }
-
-  process.exit(1);
-};
-
-const handleUnexpected = async (err: Error) => {
-  const { message } = err;
-
-  // We do not want to render errors about Sentry not being reachable
-  if (message.includes('sentry') && message.includes('ENOTFOUND')) {
-    output.debug(`Sentry is not reachable: ${err}`);
-    return;
-  }
-
-  output.error(`An unexpected error occurred!\n${err.stack}`);
-  await reportError(Sentry, client, err);
-
-  process.exit(1);
-};
-
-process.on('unhandledRejection', handleRejection);
-process.on('uncaughtException', handleUnexpected);
-
-=======
->>>>>>> upstream/main
 main()
   .then(async exitCode => {
     // Print update information, if available
@@ -1010,9 +933,6 @@ Changelog: ${output.link(changelog, changelog, { fallback: false })}
 Run ${chalk.cyan(cmd(await getUpdateCommand()))} to update.${errorMsg}`
           )
         );
-<<<<<<< HEAD
-        output.print('\n\n');
-=======
         output.print('\n');
 
         // Prompt user to upgrade now
@@ -1021,7 +941,6 @@ Run ${chalk.cyan(cmd(await getUpdateCommand()))} to update.${errorMsg}`
           process.exitCode = upgradeExitCode;
           return;
         }
->>>>>>> upstream/main
       }
     }
 

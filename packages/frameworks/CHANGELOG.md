@@ -1,7 +1,5 @@
 # @vercel/frameworks
 
-<<<<<<< HEAD
-=======
 ## 3.15.7
 
 ### Patch Changes
@@ -24,7 +22,6 @@
 
 - Add zero-config support for Koa.js ([#14567](https://github.com/vercel/vercel/pull/14567))
 
->>>>>>> upstream/main
 ## 3.15.4
 
 ### Patch Changes

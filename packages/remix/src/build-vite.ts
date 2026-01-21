@@ -8,10 +8,6 @@ import {
   execCommand,
   getEnvForPackageManager,
   getNodeVersion,
-<<<<<<< HEAD
-  getSpawnOptions,
-=======
->>>>>>> upstream/main
   glob,
   runNpmInstall,
   runPackageJsonScript,
@@ -313,24 +309,11 @@ export const build: BuildV2 = async ({
     turboSupportsCorepackHome,
   } = await scanParentDirs(entrypointFsDirname, true);
 
-<<<<<<< HEAD
-  const spawnOpts = getSpawnOptions(meta, nodeVersion);
-  if (!spawnOpts.env) {
-    spawnOpts.env = {};
-  }
-
-  spawnOpts.env = getEnvForPackageManager({
-    cliType,
-    lockfileVersion,
-    packageJsonPackageManager,
-    env: spawnOpts.env,
-=======
   const spawnEnv = getEnvForPackageManager({
     cliType,
     lockfileVersion,
     packageJsonPackageManager,
     env: process.env,
->>>>>>> upstream/main
     turboSupportsCorepackHome,
     projectCreatedAt: config.projectSettings?.createdAt,
   });
@@ -339,11 +322,7 @@ export const build: BuildV2 = async ({
     if (installCommand.trim()) {
       console.log(`Running "install" command: \`${installCommand}\`...`);
       await execCommand(installCommand, {
-<<<<<<< HEAD
-        ...spawnOpts,
-=======
         env: spawnEnv,
->>>>>>> upstream/main
         cwd: entrypointFsDirname,
       });
     } else {
@@ -353,11 +332,7 @@ export const build: BuildV2 = async ({
     await runNpmInstall(
       entrypointFsDirname,
       [],
-<<<<<<< HEAD
-      spawnOpts,
-=======
       { env: spawnEnv },
->>>>>>> upstream/main
       meta,
       config.projectSettings?.createdAt
     );
@@ -376,11 +351,7 @@ export const build: BuildV2 = async ({
   if (buildCommand) {
     debug(`Executing build command "${buildCommand}"`);
     await execCommand(buildCommand, {
-<<<<<<< HEAD
-      ...spawnOpts,
-=======
       env: spawnEnv,
->>>>>>> upstream/main
       cwd: entrypointFsDirname,
     });
   } else {
@@ -389,11 +360,7 @@ export const build: BuildV2 = async ({
       await runPackageJsonScript(
         entrypointFsDirname,
         'vercel-build',
-<<<<<<< HEAD
-        spawnOpts,
-=======
         { env: spawnEnv },
->>>>>>> upstream/main
         config.projectSettings?.createdAt
       );
     } else if (hasScript('build', packageJson)) {
@@ -401,20 +368,12 @@ export const build: BuildV2 = async ({
       await runPackageJsonScript(
         entrypointFsDirname,
         'build',
-<<<<<<< HEAD
-        spawnOpts,
-=======
         { env: spawnEnv },
->>>>>>> upstream/main
         config.projectSettings?.createdAt
       );
     } else {
       await execCommand(frameworkSettings.buildCommand, {
-<<<<<<< HEAD
-        ...spawnOpts,
-=======
         env: spawnEnv,
->>>>>>> upstream/main
         cwd: entrypointFsDirname,
       });
     }

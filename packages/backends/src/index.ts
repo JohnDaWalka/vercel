@@ -10,24 +10,6 @@ import {
   debug,
   type PrepareCache,
   type BuildV2,
-<<<<<<< HEAD
-=======
-  getNodeVersion,
->>>>>>> upstream/main
-} from '@vercel/build-utils';
-
-export const version = 2;
-
-export const build: BuildV2 = async args => {
-  const downloadResult = await downloadInstallAndBundle(args);
-<<<<<<< HEAD
-
-  const outputConfig = await doBuild(args, downloadResult);
-
-  const { files } = await nodeFileTrace(args, downloadResult, outputConfig);
-
-  debug('Building route mapping..');
-=======
   const nodeVersion = await getNodeVersion(args.workPath);
 
   const outputConfig = await doBuild(args, downloadResult);
@@ -35,7 +17,6 @@ export const build: BuildV2 = async args => {
   debug('Node file trace starting..');
   const nftPromise = nodeFileTrace(args, nodeVersion, outputConfig);
   debug('Introspection starting..');
->>>>>>> upstream/main
   const { routes, framework } = await introspectApp({
     ...outputConfig,
     framework: args.config.framework,
@@ -44,18 +25,11 @@ export const build: BuildV2 = async args => {
       ...(args.meta?.buildEnv ?? {}),
     },
   });
-<<<<<<< HEAD
-  if (routes.length > 2) {
-    debug(`Route mapping built successfully with ${routes.length} routes`);
-  } else {
-    debug(`Route mapping failed to detect routes`);
-=======
 
   if (routes.length > 2) {
     debug(`Introspection completed successfully with ${routes.length} routes`);
   } else {
     debug(`Introspection failed to detect routes`);
->>>>>>> upstream/main
   }
 
   const handler = relative(
@@ -63,16 +37,11 @@ export const build: BuildV2 = async args => {
     join(outputConfig.dir, outputConfig.handler)
   );
 
-<<<<<<< HEAD
-  const lambda = new NodejsLambda({
-    runtime: downloadResult.nodeVersion.runtime,
-=======
   const { files } = await nftPromise;
   debug('Node file trace complete');
 
   const lambda = new NodejsLambda({
     runtime: nodeVersion.runtime,
->>>>>>> upstream/main
     handler,
     files,
     shouldAddHelpers: false,
