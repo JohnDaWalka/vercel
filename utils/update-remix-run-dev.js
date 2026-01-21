@@ -5,7 +5,7 @@ const fs = require('fs');
 module.exports = async ({ github, context }, newVersion) => {
   execSync('git config --global user.email infra+release@vercel.com');
   execSync('git config --global user.name vercel-release-bot');
-  execSync('git checkout main');
+  execSync('git checkout dev');
 
   const repoRootPath = path.join(__dirname, '..');
   const packagePath = path.join(repoRootPath, 'packages', 'remix');
@@ -72,7 +72,7 @@ Update \`@remix-run/dev\` fork to v${newVersion}
     owner,
     repo,
     head: branch,
-    base: 'main',
+    base: 'dev',
     title: `[remix] Update \`@remix-run/dev\` to v${newVersion}`,
     body: `This auto-generated PR updates \`@remix-run/dev\` to version ${newVersion}.`,
   });
