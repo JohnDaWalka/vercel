@@ -1,7 +1,5 @@
 # @vercel/routing-utils
 
-<<<<<<< HEAD
-=======
 ## 5.3.2
 
 ### Patch Changes
@@ -10,7 +8,6 @@
 
 - Add respectOriginCacheControl to routes schema ([#14565](https://github.com/vercel/vercel/pull/14565))
 
->>>>>>> upstream/main
 ## 5.3.1
 
 ### Patch Changes

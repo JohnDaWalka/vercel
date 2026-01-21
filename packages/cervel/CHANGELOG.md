@@ -1,7 +1,5 @@
 # @vercel/cervel
 
-<<<<<<< HEAD
-=======
 ## 0.0.9
 
 ### Patch Changes
@@ -16,7 +14,6 @@
 
 - Add support for 'main' entrypoint and search in `dist` for app entrypoint if a build script is provided ([#14550](https://github.com/vercel/vercel/pull/14550))
 
->>>>>>> upstream/main
 ## 0.0.7
 
 ### Patch Changes
