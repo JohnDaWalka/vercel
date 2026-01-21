@@ -148,11 +148,7 @@ export async function getSupportedNodeVersion(
     if (!found) {
       throw new NowBuildError({
         code: 'BUILD_UTILS_NODE_VERSION_INVALID',
-<<<<<<< HEAD
-        link: 'http://vercel.link/node-version',
-=======
         link: 'https://vercel.link/node-version',
->>>>>>> upstream/main
         message: `Found invalid Node.js Version: "${engineRange}". ${getHint(
           isAuto,
           availableVersions
@@ -169,11 +165,7 @@ export async function getSupportedNodeVersion(
     const intro = `Node.js Version "${selection.range}" is discontinued and must be upgraded.`;
     throw new NowBuildError({
       code: 'BUILD_UTILS_NODE_VERSION_DISCONTINUED',
-<<<<<<< HEAD
-      link: 'http://vercel.link/node-version',
-=======
       link: 'https://vercel.link/node-version',
->>>>>>> upstream/main
       message: `${intro} ${getHint(isAuto)}`,
     });
   }

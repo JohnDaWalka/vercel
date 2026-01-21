@@ -31,10 +31,6 @@ import {
   runPackageJsonScript,
   runShellScript,
   getNodeVersion,
-<<<<<<< HEAD
-  getSpawnOptions,
-=======
->>>>>>> upstream/main
   debug,
   NowBuildError,
   scanParentDirs,
@@ -488,13 +484,6 @@ export const build: BuildV2 = async ({
       config,
       meta
     );
-<<<<<<< HEAD
-    const spawnOpts = getSpawnOptions(meta, nodeVersion);
-
-    if (!spawnOpts.env) {
-      spawnOpts.env = {};
-    }
-=======
 
     const {
       cliType,
@@ -511,7 +500,6 @@ export const build: BuildV2 = async ({
       turboSupportsCorepackHome,
       projectCreatedAt: config.projectSettings?.createdAt,
     });
->>>>>>> upstream/main
 
     /* Don't fail the build on warnings from Create React App.
     Node.js will load 'false' as a string, not a boolean, so it's truthy still.
@@ -523,31 +511,9 @@ export const build: BuildV2 = async ({
     https://github.com/vercel/community/discussions/30
     */
     if (framework?.slug === 'create-react-app') {
-<<<<<<< HEAD
-      spawnOpts.env.CI = 'false';
-    }
-
-    const {
-      cliType,
-      lockfileVersion,
-      packageJsonPackageManager,
-      turboSupportsCorepackHome,
-    } = await scanParentDirs(entrypointDir, true);
-
-    spawnOpts.env = getEnvForPackageManager({
-      cliType,
-      lockfileVersion,
-      packageJsonPackageManager,
-      env: spawnOpts.env || {},
-      turboSupportsCorepackHome,
-      projectCreatedAt: config.projectSettings?.createdAt,
-    });
-
-=======
       spawnEnv.CI = 'false';
     }
 
->>>>>>> upstream/main
     if (meta.isDev) {
       debug('Skipping dependency installation because dev mode is enabled');
     } else {
@@ -564,11 +530,7 @@ export const build: BuildV2 = async ({
         await runNpmInstall(
           entrypointDir,
           [],
-<<<<<<< HEAD
-          spawnOpts,
-=======
           { env: spawnEnv },
->>>>>>> upstream/main
           meta,
           config.projectSettings?.createdAt
         );
@@ -577,11 +539,7 @@ export const build: BuildV2 = async ({
         if (installCommand.trim()) {
           console.log(`Running "install" command: \`${installCommand}\`...`);
           await execCommand(installCommand, {
-<<<<<<< HEAD
-            ...spawnOpts,
-=======
             env: spawnEnv,
->>>>>>> upstream/main
             cwd: entrypointDir,
           });
           // Its not clear which command was run, so assume all
@@ -626,11 +584,7 @@ export const build: BuildV2 = async ({
           await runNpmInstall(
             entrypointDir,
             [],
-<<<<<<< HEAD
-            spawnOpts,
-=======
             { env: spawnEnv },
->>>>>>> upstream/main
             meta,
             config.projectSettings?.createdAt
           );
@@ -679,15 +633,6 @@ export const build: BuildV2 = async ({
       // TODO: Add bins to PATH once we implement pip caching
     }
 
-<<<<<<< HEAD
-    if (spawnOpts?.env?.PATH) {
-      // Append system path last so others above take precedence
-      pathList.push(spawnOpts.env.PATH);
-    }
-
-    spawnOpts.env = {
-      ...spawnOpts.env,
-=======
     if (spawnEnv.PATH) {
       // Append system path last so others above take precedence
       pathList.push(spawnEnv.PATH);
@@ -695,7 +640,6 @@ export const build: BuildV2 = async ({
 
     const cliEnv = {
       ...process.env,
->>>>>>> upstream/main
       PATH: pathList.join(path.delimiter),
       GEM_HOME: gemHome,
     };
@@ -722,11 +666,7 @@ export const build: BuildV2 = async ({
         const opts: SpawnOptions = {
           cwd: entrypointDir,
           stdio: 'inherit',
-<<<<<<< HEAD
-          env: { ...spawnOpts.env, PORT: String(devPort) },
-=======
           env: { ...cliEnv, PORT: String(devPort) },
->>>>>>> upstream/main
         };
 
         const cmd = devCommand || `yarn run ${devScript}`;
@@ -777,20 +717,11 @@ export const build: BuildV2 = async ({
         const found =
           typeof buildCommand === 'string'
             ? await execCommand(buildCommand, {
-<<<<<<< HEAD
-                ...spawnOpts,
-
-=======
->>>>>>> upstream/main
                 // Yarn v2 PnP mode may be activated, so force
                 // "node-modules" linker style
                 env: {
                   YARN_NODE_LINKER: 'node-modules',
-<<<<<<< HEAD
-                  ...spawnOpts.env,
-=======
                   ...cliEnv,
->>>>>>> upstream/main
                 },
 
                 cwd: entrypointDir,
@@ -798,11 +729,7 @@ export const build: BuildV2 = async ({
             : await runPackageJsonScript(
                 entrypointDir,
                 ['vercel-build', 'now-build', 'build'],
-<<<<<<< HEAD
-                spawnOpts,
-=======
                 { env: cliEnv },
->>>>>>> upstream/main
                 config.projectSettings?.createdAt
               );
 
@@ -909,18 +836,7 @@ export const build: BuildV2 = async ({
 
   if (!config.zeroConfig && entrypoint.endsWith('.sh')) {
     debug(`Running build script "${entrypoint}"`);
-<<<<<<< HEAD
-    const nodeVersion = await getNodeVersion(
-      entrypointDir,
-      undefined,
-      config,
-      meta
-    );
-    const spawnOpts = getSpawnOptions(meta, nodeVersion);
-    await runShellScript(path.join(workPath, entrypoint), [], spawnOpts);
-=======
     await runShellScript(path.join(workPath, entrypoint));
->>>>>>> upstream/main
     validateDistDir(distPath, workPath);
 
     const output = await glob('**', distPath, mountpoint);

@@ -1,16 +1,12 @@
 import { existsSync } from 'node:fs';
 import { writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
-<<<<<<< HEAD
-import type { BuildOptions } from '@vercel/build-utils';
-=======
 import {
   debug,
   getPackageJson,
   getScriptName,
   type BuildOptions,
 } from '@vercel/build-utils';
->>>>>>> upstream/main
 import {
   build as cervelBuild,
   findEntrypoint,
@@ -37,19 +33,6 @@ export const doBuild = async (
   // If a build command ran but no output directory was configured, that's an error
   // Exception: if the build command is a cervel command, it handles output internally
   const isCervelCommand = buildCommand?.trim().startsWith('cervel');
-<<<<<<< HEAD
-  // if (buildCommandResult && !outputSetting && !isCervelCommand) {
-  //   throw new Error(
-  //     'Build command ran successfully, but no "outputDirectory" was configured. ' +
-  //       'Please specify where your build outputs files by setting "outputDirectory" in your vercel.json.'
-  //   );
-  // }
-
-  // If there's no output directory configured
-  if (!outputSetting) {
-    // If cervel was run as build command, use its default output location
-    if (isCervelCommand) {
-=======
 
   // If there's no output directory configured
   if (!outputSetting) {
@@ -57,16 +40,12 @@ export const doBuild = async (
     // If cervel was run as build command, use its default output location
     if (isCervelCommand) {
       debug('Cervel command ran, using its default output location');
->>>>>>> upstream/main
       // Cervel defaults to outputting to a `dist` directory
       const cervelOutputDir = join(args.workPath, 'dist');
       const cervelJsonPath = join(cervelOutputDir, '.cervel.json');
 
       if (existsSync(cervelJsonPath)) {
-<<<<<<< HEAD
-=======
         debug('Cervel JSON file found, using its handler');
->>>>>>> upstream/main
         const { handler } = await getBuildSummary(cervelOutputDir);
         return {
           dir: cervelOutputDir,
@@ -85,10 +64,7 @@ export const doBuild = async (
     // Check if a `dist` directory exists (common build output convention)
     const distDir = join(args.workPath, 'dist');
     if (existsSync(distDir)) {
-<<<<<<< HEAD
-=======
       debug('Dist directory found, checking for .cervel.json');
->>>>>>> upstream/main
       const cervelJsonPath = join(distDir, '.cervel.json');
 
       // If .cervel.json exists, use it
@@ -104,15 +80,10 @@ export const doBuild = async (
       // Otherwise, detect entrypoint in dist directory
       let handler: string;
       try {
-<<<<<<< HEAD
-        handler = await findEntrypoint(distDir);
-      } catch (error) {
-=======
         debug('Finding entrypoint in dist directory');
         handler = await findEntrypoint(distDir);
       } catch (error) {
         debug('Finding entrypoint in dist directory with ignoreRegex');
->>>>>>> upstream/main
         handler = await findEntrypoint(distDir, { ignoreRegex: true });
       }
 
@@ -125,10 +96,7 @@ export const doBuild = async (
       };
     }
 
-<<<<<<< HEAD
-=======
     debug('No dist directory found, building ourselves');
->>>>>>> upstream/main
     // Otherwise, we need to build ourselves
     const buildResult = await cervelBuild({
       cwd: args.workPath,
@@ -145,11 +113,6 @@ export const doBuild = async (
     };
   }
 
-<<<<<<< HEAD
-  // If there's an output directory configured but no build command result, build ourselves
-  const outputDir = join(args.workPath, outputSetting);
-  if (!buildCommandResult) {
-=======
   const outputDir = join(args.workPath, outputSetting);
 
   const packageJson = await getPackageJson(args.workPath);
@@ -161,7 +124,6 @@ export const doBuild = async (
     !getScriptName(packageJson, ['build']);
 
   if (!buildCommandResult || monorepoWithoutBuildScript) {
->>>>>>> upstream/main
     const buildResult = await cervelBuild({
       cwd: args.workPath,
       out: outputDir,

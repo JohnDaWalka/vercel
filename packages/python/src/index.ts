@@ -11,20 +11,14 @@ import {
   execCommand,
   scanParentDirs,
   getEnvForPackageManager,
-<<<<<<< HEAD
-=======
   isPythonFramework,
->>>>>>> upstream/main
   type BuildOptions,
   type GlobOptions,
   type BuildV3,
   type Files,
   type ShouldServe,
   FileFsRef,
-<<<<<<< HEAD
-=======
   PythonFramework,
->>>>>>> upstream/main
 } from '@vercel/build-utils';
 import {
   getUvBinaryOrInstall,
@@ -49,12 +43,7 @@ const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
 import {
-<<<<<<< HEAD
-  FASTAPI_CANDIDATE_ENTRYPOINTS,
-  FLASK_CANDIDATE_ENTRYPOINTS,
-=======
   PYTHON_CANDIDATE_ENTRYPOINTS,
->>>>>>> upstream/main
   detectPythonEntrypoint,
 } from './entrypoint';
 
@@ -116,13 +105,8 @@ export const build: BuildV3 = async ({
     throw err;
   }
 
-<<<<<<< HEAD
-  // For FastAPI/Flask, also honor project install/build commands (vercel.json/dashboard)
-  if (framework === 'fastapi' || framework === 'flask') {
-=======
   // For Python frameworks, also honor project install/build commands (vercel.json/dashboard)
   if (isPythonFramework(framework)) {
->>>>>>> upstream/main
     const {
       cliType,
       lockfileVersion,
@@ -171,19 +155,11 @@ export const build: BuildV3 = async ({
 
   // Zero config entrypoint discovery
   if (
-<<<<<<< HEAD
-    (framework === 'fastapi' || framework === 'flask') &&
-    (!fsFiles[entrypoint] || !entrypoint.endsWith('.py'))
-  ) {
-    const detected = await detectPythonEntrypoint(
-      config.framework as 'fastapi' | 'flask',
-=======
     isPythonFramework(framework) &&
     (!fsFiles[entrypoint] || !entrypoint.endsWith('.py'))
   ) {
     const detected = await detectPythonEntrypoint(
       config.framework as PythonFramework,
->>>>>>> upstream/main
       workPath,
       entrypoint
     );
@@ -193,14 +169,7 @@ export const build: BuildV3 = async ({
       );
       entrypoint = detected;
     } else {
-<<<<<<< HEAD
-      const searchedList =
-        framework === 'fastapi'
-          ? FASTAPI_CANDIDATE_ENTRYPOINTS.join(', ')
-          : FLASK_CANDIDATE_ENTRYPOINTS.join(', ');
-=======
       const searchedList = PYTHON_CANDIDATE_ENTRYPOINTS.join(', ');
->>>>>>> upstream/main
       throw new NowBuildError({
         code: `${framework.toUpperCase()}_ENTRYPOINT_NOT_FOUND`,
         message: `No ${framework} entrypoint found. Add an 'app' script in pyproject.toml or define an entrypoint in one of: ${searchedList}.`,
@@ -283,20 +252,11 @@ export const build: BuildV3 = async ({
     venvPath,
   });
 
-<<<<<<< HEAD
-  // If a custom install command is configured for FastAPI/Flask, treat it as
-  // an override for the default dependency installation: run the command inside
-  // the build virtualenv
-  const hasCustomInstallCommand =
-    (framework === 'fastapi' || framework === 'flask') &&
-    !!projectInstallCommand;
-=======
   // If a custom install command is configured for Python frameworks, treat it as
   // an override for the default dependency installation: run the command inside
   // the build virtualenv
   const hasCustomInstallCommand =
     isPythonFramework(framework) && !!projectInstallCommand;
->>>>>>> upstream/main
 
   if (hasCustomInstallCommand) {
     const baseEnv = spawnEnv || process.env;
@@ -310,19 +270,11 @@ export const build: BuildV3 = async ({
       cwd: workPath,
     });
   } else {
-<<<<<<< HEAD
-    // If a pyproject install script is configured for FastAPI/Flask, treat it as
-    // an override for the default dependency installation: run the script inside
-    // the build virtualenv.
-    let ranPyprojectInstall = false;
-    if (framework === 'fastapi' || framework === 'flask') {
-=======
     // If a pyproject install script is configured for Python frameworks, treat it as
     // an override for the default dependency installation: run the script inside
     // the build virtualenv.
     let ranPyprojectInstall = false;
     if (isPythonFramework(framework)) {
->>>>>>> upstream/main
       const baseEnv = spawnEnv || process.env;
       const pythonEnv = createVenvEnv(venvPath, baseEnv);
       pythonEnv.VERCEL_PYTHON_VENV_PATH = venvPath;

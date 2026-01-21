@@ -2066,10 +2066,7 @@ export const frameworks = [
     description:
       'FastAPI framework, high performance, easy to learn, fast to code, ready for production',
     website: 'https://fastapi.tiangolo.com',
-<<<<<<< HEAD
-=======
     supersedes: ['python'],
->>>>>>> upstream/main
     useRuntime: { src: 'index.py', use: '@vercel/python' },
     ignoreRuntimes: ['@vercel/python'],
     detectors: {
@@ -2122,10 +2119,7 @@ export const frameworks = [
     tagline: 'The Python micro web framework',
     description: 'A Flask app, ready for production',
     website: 'https://flask.palletsprojects.com',
-<<<<<<< HEAD
-=======
     supersedes: ['python'],
->>>>>>> upstream/main
     useRuntime: { src: 'index.py', use: '@vercel/python' },
     ignoreRuntimes: ['@vercel/python'],
     detectors: {
@@ -2182,10 +2176,7 @@ export const frameworks = [
     description:
       'A library for writing fast and scalable Starlette-powered web applications',
     website: 'https://fastht.ml',
-<<<<<<< HEAD
-=======
     supersedes: ['python'],
->>>>>>> upstream/main
     useRuntime: { src: 'main.py', use: '@vercel/python' },
     detectors: {
       every: [
@@ -3080,8 +3071,6 @@ export const frameworks = [
     getOutputDirName: async () => 'public',
   },
   {
-<<<<<<< HEAD
-=======
     name: 'Koa',
     slug: 'koa',
     logo: 'https://api-frameworks.vercel.sh/framework-logos/koa.svg',
@@ -3306,7 +3295,6 @@ export const frameworks = [
     getOutputDirName: async () => 'public',
   },
   {
->>>>>>> upstream/main
     name: 'NestJS',
     slug: 'nestjs',
     logo: 'https://api-frameworks.vercel.sh/framework-logos/nestjs.svg',
@@ -4081,8 +4069,6 @@ export const frameworks = [
     getOutputDirName: async () => 'dist',
   },
   {
-<<<<<<< HEAD
-=======
     name: 'Python',
     slug: 'python',
     experimental: true,
@@ -4165,7 +4151,6 @@ export const frameworks = [
     getOutputDirName: async () => 'public',
   },
   {
->>>>>>> upstream/main
     name: 'Other',
     slug: null,
     logo: 'https://api-frameworks.vercel.sh/framework-logos/other.svg',

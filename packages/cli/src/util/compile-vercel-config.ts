@@ -7,8 +7,6 @@ import { NowBuildError } from '@vercel/build-utils';
 import { VERCEL_DIR } from './projects/link';
 import { ConflictingConfigFiles } from './errors-ts';
 
-<<<<<<< HEAD
-=======
 function isRouteFormat(item: any): boolean {
   return item && typeof item === 'object' && 'src' in item;
 }
@@ -105,7 +103,6 @@ export function normalizeConfig(config: any): any {
   return normalized;
 }
 
->>>>>>> upstream/main
 export interface CompileConfigResult {
   configPath: string | null;
   wasCompiled: boolean;
@@ -351,16 +348,10 @@ export async function compileVercelConfig(
       });
     });
 
-<<<<<<< HEAD
-    await writeFile(
-      compiledConfigPath,
-      JSON.stringify(config, null, 2),
-=======
     const normalizedConfig = normalizeConfig(config);
     await writeFile(
       compiledConfigPath,
       JSON.stringify(normalizedConfig, null, 2),
->>>>>>> upstream/main
       'utf-8'
     );
 

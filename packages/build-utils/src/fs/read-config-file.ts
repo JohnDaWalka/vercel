@@ -2,11 +2,8 @@ import yaml from 'js-yaml';
 import toml from '@iarna/toml';
 import { readFile } from 'fs-extra';
 import { isErrnoException } from '@vercel/error-utils';
-<<<<<<< HEAD
-=======
 import { join } from 'path';
 import type { PackageJson } from '../types';
->>>>>>> upstream/main
 
 async function readFileOrNull(file: string) {
   try {
@@ -50,8 +47,6 @@ export async function readConfigFile<T>(
 
   return null;
 }
-<<<<<<< HEAD
-=======
 
 /**
  * Reads and parses the package.json file from a directory.
@@ -66,4 +61,3 @@ export async function getPackageJson(dir: string): Promise<PackageJson> {
     return {};
   }
 }
->>>>>>> upstream/main

@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-import { getSupportedPythonVersion } from '../src/version';
-import { build } from '../src/index';
-=======
 import {
   getSupportedPythonVersion,
   DEFAULT_PYTHON_VERSION,
@@ -13,7 +9,6 @@ import {
   getVenvBinDir,
   UV_PYTHON_DOWNLOADS_MODE,
 } from '../src/utils';
->>>>>>> upstream/main
 import fs from 'fs-extra';
 import path from 'path';
 import { tmpdir } from 'os';
@@ -128,9 +123,6 @@ describe('requires-python range parsing', () => {
   });
 });
 
-<<<<<<< HEAD
-it('should select latest supported installed version when no Piplock detected', () => {
-=======
 describe('Python 3.13 and 3.14 support', () => {
   it('selects Python 3.13 when specified in requires-python', () => {
     makeMockPython('3.12');
@@ -249,16 +241,12 @@ describe('default Python version behavior', () => {
 });
 
 it('should select default or latest installed version when no Piplock detected', () => {
->>>>>>> upstream/main
   makeMockPython('3.10');
   const result = getSupportedPythonVersion({
     declaredPythonVersion: undefined,
   });
   expect(result).toHaveProperty('runtime');
-<<<<<<< HEAD
-=======
   // When default version isn't installed, falls back to latest available
->>>>>>> upstream/main
   expect(result.runtime).toMatch(/^python3\.\d+$/);
   expect(warningMessages).toStrictEqual([]);
 });
@@ -271,11 +259,7 @@ it('should select latest supported installed version and warn when invalid Piplo
   expect(result).toHaveProperty('runtime');
   expect(result.runtime).toMatch(/^python3\.\d+$/);
   expect(warningMessages).toStrictEqual([
-<<<<<<< HEAD
-    'Warning: Python version "999" detected in Pipfile.lock is invalid and will be ignored. http://vercel.link/python-version',
-=======
     'Warning: Python version "999" detected in Pipfile.lock is invalid and will be ignored. https://vercel.link/python-version',
->>>>>>> upstream/main
   ]);
 });
 
@@ -313,11 +297,7 @@ it('should warn for deprecated versions, soon to be discontinued', () => {
     })
   ).toHaveProperty('runtime', 'python3.6');
   expect(warningMessages).toStrictEqual([
-<<<<<<< HEAD
-    'Error: Python version "3.6" detected in Pipfile.lock has reached End-of-Life. Deployments created on or after 2022-07-18 will fail to build. http://vercel.link/python-version',
-=======
     'Error: Python version "3.6" detected in Pipfile.lock has reached End-of-Life. Deployments created on or after 2022-07-18 will fail to build. https://vercel.link/python-version',
->>>>>>> upstream/main
   ]);
 });
 
@@ -342,8 +322,6 @@ function makeMockPython(version: string) {
       fs.writeFileSync(shim, isWin ? winScript : posixScript, 'utf8');
       if (!isWin) fs.chmodSync(shim, 0o755);
     }
-<<<<<<< HEAD
-=======
 
     // Also provide fully unversioned "python"/"pip" shims (needed on Windows where
     // runStdlibPyScript uses "python" instead of "python3")
@@ -353,7 +331,6 @@ function makeMockPython(version: string) {
     );
     fs.writeFileSync(unversionedShim, isWin ? winScript : posixScript, 'utf8');
     if (!isWin) fs.chmodSync(unversionedShim, 0o755);
->>>>>>> upstream/main
   }
 
   // mock uv: ensure a uv.lock file exists whenever the binary is invoked.
@@ -1280,8 +1257,6 @@ describe('custom install hooks', () => {
     expect(mockExecCommand).not.toHaveBeenCalled();
   });
 });
-<<<<<<< HEAD
-=======
 
 describe('UV_PYTHON_DOWNLOADS environment variable protection', () => {
   const originalEnv = process.env;
@@ -1350,4 +1325,3 @@ describe('UV_PYTHON_DOWNLOADS environment variable protection', () => {
     });
   });
 });
->>>>>>> upstream/main

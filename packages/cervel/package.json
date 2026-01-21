@@ -1,10 +1,6 @@
 {
   "name": "@vercel/cervel",
-<<<<<<< HEAD
-  "version": "0.0.7",
-=======
   "version": "0.0.9",
->>>>>>> upstream/main
   "license": "Apache-2.0",
   "homepage": "https://vercel.com/docs",
   "publishConfig": {
@@ -37,15 +33,9 @@
   },
   "dependencies": {
     "execa": "3.2.0",
-<<<<<<< HEAD
-    "rolldown": "1.0.0-beta.52",
-    "srvx": "0.8.9",
-    "tsx": "4.19.2"
-=======
     "rolldown": "1.0.0-beta.59",
     "srvx": "0.8.9",
     "tsx": "4.21.0"
->>>>>>> upstream/main
   },
   "peerDependencies": {
     "typescript": "^4.0.0 || ^5.0.0"

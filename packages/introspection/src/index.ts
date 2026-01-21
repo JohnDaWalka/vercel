@@ -55,10 +55,7 @@ export const introspectApp = async (args: {
   await new Promise(resolvePromise => {
     try {
       // Use both -r (for CommonJS/require) and --import (for ESM/import)
-<<<<<<< HEAD
-=======
       debug('Spawning introspection process');
->>>>>>> upstream/main
       const child = spawn(
         'node',
         ['-r', cjsLoaderPath, '--import', esmLoaderPath, handlerPath],
@@ -78,26 +75,14 @@ export const introspectApp = async (args: {
           introspectionData = introspectionSchema.parse(
             JSON.parse(data.toString() || '{}')
           );
-<<<<<<< HEAD
-        } catch (error) {
-          // Ignore errors
-=======
           debug(`Introspection data parsed successfully`);
         } catch (error) {
           debug('Error parsing introspection data', error);
           // Ignore errors - introspection data might be incomplete or malformed
->>>>>>> upstream/main
         }
       });
 
       const timeout = setTimeout(() => {
-<<<<<<< HEAD
-        child.kill('SIGTERM');
-      }, 2000);
-      const timeout2 = setTimeout(() => {
-        child.kill('SIGKILL');
-      }, 3000);
-=======
         debug('Introspection timeout, killing process with SIGTERM');
         child.kill('SIGTERM');
       }, 8000);
@@ -105,33 +90,22 @@ export const introspectApp = async (args: {
         debug('Introspection timeout, killing process with SIGKILL');
         child.kill('SIGKILL');
       }, 9000);
->>>>>>> upstream/main
 
       child.on('error', err => {
         clearTimeout(timeout);
         clearTimeout(timeout2);
-<<<<<<< HEAD
-        console.log(`Loader error: ${err.message}`);
-=======
         debug(`Loader error: ${err.message}`);
->>>>>>> upstream/main
         resolvePromise(undefined);
       });
 
       child.on('close', () => {
         clearTimeout(timeout);
         clearTimeout(timeout2);
-<<<<<<< HEAD
-        resolvePromise(undefined);
-      });
-    } catch (error) {
-=======
         debug('Introspection process closed');
         resolvePromise(undefined);
       });
     } catch (error) {
       debug('Introspection error', error);
->>>>>>> upstream/main
       resolvePromise(undefined);
     }
   });

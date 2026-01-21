@@ -1,12 +1,6 @@
 import { join } from 'path';
 import { writeFile, remove } from 'fs-extra';
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-<<<<<<< HEAD
-import { compileVercelConfig } from '../../../src/util/compile-vercel-config';
-import { getNewTmpDir } from '../../helpers/get-tmp-dir';
-import { VERCEL_DIR } from '../../../src/util/projects/link';
-
-=======
 import {
   compileVercelConfig,
   normalizeConfig,
@@ -183,7 +177,6 @@ describe('normalizeConfig', () => {
   });
 });
 
->>>>>>> upstream/main
 describe('compileVercelConfig', () => {
   let tmpDir: string;
 
