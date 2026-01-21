@@ -1,7 +1,5 @@
 # @vercel/elysia
 
-<<<<<<< HEAD
-=======
 ## 0.1.24
 
 ### Patch Changes
@@ -65,7 +63,6 @@
 - Updated dependencies []:
   - @vercel/node@5.5.17
 
->>>>>>> upstream/main
 ## 0.1.15
 
 ### Patch Changes

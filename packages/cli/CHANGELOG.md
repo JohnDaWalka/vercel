@@ -1,7 +1,5 @@
 # vercel
 
-<<<<<<< HEAD
-=======
 ## 50.4.8
 
 ### Patch Changes
@@ -331,7 +329,6 @@
   - @vercel/python@6.1.6
   - @vercel/node@5.5.16
 
->>>>>>> upstream/main
 ## 50.1.3
 
 ### Patch Changes

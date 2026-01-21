@@ -1,7 +1,5 @@
 # @vercel/oidc
 
-<<<<<<< HEAD
-=======
 ## 3.1.0
 
 ### Minor Changes
@@ -12,7 +10,6 @@
 
 - improve error messages for package consumers ([#14449](https://github.com/vercel/vercel/pull/14449))
 
->>>>>>> upstream/main
 ## 3.0.5
 
 ### Patch Changes

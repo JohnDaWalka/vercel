@@ -1,7 +1,5 @@
 # @vercel/go
 
-<<<<<<< HEAD
-=======
 ## 3.3.3
 
 ### Patch Changes
@@ -26,7 +24,6 @@
 
 - Use GOMODCACHE and GOCACHE to speed up rebuilding Go projects ([#14484](https://github.com/vercel/vercel/pull/14484))
 
->>>>>>> upstream/main
 ## 3.2.4
 
 ### Patch Changes

@@ -1,7 +1,5 @@
 # @vercel/fs-detectors
 
-<<<<<<< HEAD
-=======
 ## 5.7.15
 
 ### Patch Changes
@@ -35,7 +33,6 @@
   - @vercel/routing-utils@5.3.2
   - @vercel/frameworks@3.15.4
 
->>>>>>> upstream/main
 ## 5.7.11
 
 ### Patch Changes

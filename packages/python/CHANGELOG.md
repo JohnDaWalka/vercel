@@ -1,7 +1,5 @@
 # @vercel/python
 
-<<<<<<< HEAD
-=======
 ## 6.2.1
 
 ### Patch Changes
@@ -22,7 +20,6 @@
 
 - [python] fix handling of ASGI headers in local runtime ([#14513](https://github.com/vercel/vercel/pull/14513))
 
->>>>>>> upstream/main
 ## 6.1.5
 
 ### Patch Changes
