@@ -138,7 +138,6 @@ async function getChunkedTests() {
     console.error('Filtering to e2e tests only:', scripts.join(', '));
   }
 
-
   // Get affected packages based on git changes
   const baseSha = process.env.TURBO_BASE_SHA || process.env.GITHUB_BASE_REF;
   const result = baseSha
