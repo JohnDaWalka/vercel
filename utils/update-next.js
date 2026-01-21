@@ -214,6 +214,26 @@ module.exports = async ({ github, context, tag } = {}) => {
     } to Next.js version ${newVersion}`
   );
 
+  // Create and push branch if github context is available
+  if (github) {
+    // Create changeset file
+    const changeset = join(__dirname, '..', '.changeset', `${branch}.md`);
+    writeFileSync(changeset, `---\n---\n\n`, 'utf-8');
+    
+    exec('git', [
+      'config',
+      '--global',
+      'user.email',
+      'infra+release@vercel.com',
+    ]);
+    exec('git', ['config', '--global', 'user.name', 'vercel-release-bot']);
+    exec('git', ['checkout', 'dev']);
+    exec('git', ['checkout', '-b', branch]);
+    exec('git', ['add', '-A']);
+    exec('git', ['commit', '-m', `Update Next.js to ${newVersion}`]);
+    exec('git', ['push', 'origin', branch]);
+  }
+
   await createPullRequest(
     github,
     branch,
