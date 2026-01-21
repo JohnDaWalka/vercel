@@ -1,7 +1,5 @@
 # @vercel/backends
 
-<<<<<<< HEAD
-=======
 ## 0.0.22
 
 ### Patch Changes
@@ -52,7 +50,6 @@
   - @vercel/introspection@0.0.8
   - @vercel/cervel@0.0.8
 
->>>>>>> upstream/main
 ## 0.0.17
 
 ### Patch Changes

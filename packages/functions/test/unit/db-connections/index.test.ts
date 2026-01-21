@@ -219,8 +219,6 @@ describe('db-connections', () => {
       Date.now = originalDateNow;
     });
 
-<<<<<<< HEAD
-=======
     test('ensures minimum wait time of 100ms when process exceeds maximum duration', () => {
       // This test verifies the fix for TimeoutNegativeWarning in Node.js v24
       // When the process runs longer than 15 minutes, the remaining duration calculation
@@ -255,7 +253,6 @@ describe('db-connections', () => {
       setTimeoutSpy.mockRestore();
     });
 
->>>>>>> upstream/main
     test('timeout expires and logs message', async () => {
       const waitUntilMock = vi.fn();
       let resolvePromise: (value: void) => void;

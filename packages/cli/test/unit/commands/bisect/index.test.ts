@@ -416,8 +416,6 @@ describe('bisect', () => {
 
     await expect(bisectPromise).resolves.toEqual(0);
   });
-<<<<<<< HEAD
-=======
 
   describe('validation errors', () => {
     it('should error when good and bad deployments are the same', async () => {
@@ -441,5 +439,4 @@ describe('bisect', () => {
       await expect(bisectPromise).resolves.toEqual(1);
     });
   });
->>>>>>> upstream/main
 });

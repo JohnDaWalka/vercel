@@ -1,7 +1,5 @@
 # @vercel/client
 
-<<<<<<< HEAD
-=======
 ## 17.2.27
 
 ### Patch Changes
@@ -66,7 +64,6 @@
   - @vercel/routing-utils@5.3.2
   - @vercel/build-utils@13.2.5
 
->>>>>>> upstream/main
 ## 17.2.18
 
 ### Patch Changes

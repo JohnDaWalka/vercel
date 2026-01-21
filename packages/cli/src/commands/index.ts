@@ -36,58 +36,7 @@ import { rollingReleaseCommand } from './rolling-release/command';
 import { targetCommand } from './target/command';
 import { teamsCommand } from './teams/command';
 import { telemetryCommand } from './telemetry/command';
-<<<<<<< HEAD
-=======
-import { upgradeCommand } from './upgrade/command';
->>>>>>> upstream/main
-import { whoamiCommand } from './whoami/command';
-import { blobCommand } from './blob/command';
-import type { Command } from './help';
-import output from '../output-manager';
-
-const commandsStructs = [
-  aliasCommand,
-  blobCommand,
-  bisectCommand,
-  buildCommand,
-  cacheCommand,
-  certsCommand,
-  curlCommand,
-  deployCommand,
-  devCommand,
-  dnsCommand,
-  domainsCommand,
-  envCommand,
-  gitCommand,
-  httpstatCommand,
-  initCommand,
-  inspectCommand,
-  installCommand,
-  integrationCommand,
-  integrationResourceCommand,
-  linkCommand,
-  listCommand,
-  loginCommand,
-  logoutCommand,
-  logsCommand,
-  mcpCommand,
-  microfrontendsCommand,
-  openCommand,
-  projectCommand,
-  promoteCommand,
-  pullCommand,
-  redeployCommand,
-  redirectsCommand,
-  removeCommand,
-  rollbackCommand,
-  rollingReleaseCommand,
-  targetCommand,
-  teamsCommand,
-  telemetryCommand,
-<<<<<<< HEAD
-=======
   upgradeCommand,
->>>>>>> upstream/main
   whoamiCommand,
   // added because we don't have a full help command
   { name: 'help', aliases: [] },
@@ -116,8 +65,5 @@ for (const command of commandsStructs) {
 output.debug(
   `All registered commands: ${JSON.stringify(Array.from(commands.entries()))}`
 );
-<<<<<<< HEAD
-=======
 
 export const commandNames = Array.from(commands.keys());
->>>>>>> upstream/main

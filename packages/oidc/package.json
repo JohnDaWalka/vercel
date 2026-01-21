@@ -17,11 +17,7 @@
       "require": "./dist/index.js"
     }
   },
-<<<<<<< HEAD
-  "version": "3.0.5",
-=======
   "version": "3.1.0",
->>>>>>> upstream/main
   "repository": {
     "directory": "packages/oidc",
     "type": "git",

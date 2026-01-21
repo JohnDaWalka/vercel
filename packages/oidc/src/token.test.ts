@@ -51,11 +51,7 @@ describe('refreshToken', () => {
     vi.mocked(findRootDir).mockReturnValue(rootDir);
     vi.mocked(getUserDataDir).mockReturnValue(userDataDir);
 
-<<<<<<< HEAD
-    vi.spyOn(tokenUtil, 'getVercelCliToken').mockReturnValue('test');
-=======
     vi.spyOn(tokenUtil, 'getVercelCliToken').mockResolvedValue('test');
->>>>>>> upstream/main
     vi.spyOn(tokenUtil, 'getVercelOidcToken').mockResolvedValue({
       token: 'test-token',
     });

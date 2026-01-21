@@ -8,21 +8,7 @@ import add from './add';
 import ls from './ls';
 import pull from './pull';
 import rm from './rm';
-<<<<<<< HEAD
-=======
-import run, { needsHelpForRun } from './run';
->>>>>>> upstream/main
-import update from './update';
-import {
-  envCommand,
-  addSubcommand,
-  listSubcommand,
-  pullSubcommand,
-  removeSubcommand,
-<<<<<<< HEAD
-=======
   runSubcommand,
->>>>>>> upstream/main
   updateSubcommand,
 } from './command';
 import { getFlagsSpecification } from '../../util/get-flags-specification';
@@ -35,86 +21,6 @@ const COMMAND_CONFIG = {
   add: getCommandAliases(addSubcommand),
   rm: getCommandAliases(removeSubcommand),
   pull: getCommandAliases(pullSubcommand),
-<<<<<<< HEAD
-=======
-  run: getCommandAliases(runSubcommand),
->>>>>>> upstream/main
-  update: getCommandAliases(updateSubcommand),
-};
-
-export default async function main(client: Client) {
-  const telemetry = new EnvTelemetryClient({
-    opts: {
-      store: client.telemetryEventStore,
-    },
-  });
-
-  let parsedArgs;
-  const flagsSpecification = getFlagsSpecification(envCommand.options);
-  try {
-    parsedArgs = parseArguments(client.argv.slice(2), flagsSpecification, {
-      permissive: true,
-    });
-  } catch (err) {
-    printError(err);
-    return 1;
-  }
-
-  const subArgs = parsedArgs.args.slice(1);
-  const { subcommand, args, subcommandOriginal } = getSubcommand(
-    subArgs,
-    COMMAND_CONFIG
-  );
-
-  const needHelp = parsedArgs.flags['--help'];
-
-  if (!subcommand && needHelp) {
-    telemetry.trackCliFlagHelp('env', subcommand);
-    output.print(help(envCommand, { columns: client.stderr.columns }));
-    return 2;
-  }
-
-  function printHelp(command: Command) {
-    output.print(
-      help(command, { parent: envCommand, columns: client.stderr.columns })
-    );
-  }
-
-  switch (subcommand) {
-    case 'ls':
-      if (needHelp) {
-        telemetry.trackCliFlagHelp('env', subcommandOriginal);
-        printHelp(listSubcommand);
-        return 2;
-      }
-      telemetry.trackCliSubcommandList(subcommandOriginal);
-      return ls(client, args);
-    case 'add':
-      if (needHelp) {
-        telemetry.trackCliFlagHelp('env', subcommandOriginal);
-        printHelp(addSubcommand);
-        return 2;
-      }
-      telemetry.trackCliSubcommandAdd(subcommandOriginal);
-      return add(client, args);
-    case 'rm':
-      if (needHelp) {
-        telemetry.trackCliFlagHelp('env', subcommandOriginal);
-        printHelp(removeSubcommand);
-        return 2;
-      }
-      telemetry.trackCliSubcommandRemove(subcommandOriginal);
-      return rm(client, args);
-    case 'pull':
-      if (needHelp) {
-        telemetry.trackCliFlagHelp('env', subcommandOriginal);
-        printHelp(pullSubcommand);
-        return 2;
-      }
-      telemetry.trackCliSubcommandPull(subcommandOriginal);
-      return pull(client, args);
-<<<<<<< HEAD
-=======
     case 'run':
       /**
        * The run subcommand uses a helper to check for --help because of the
@@ -130,7 +36,6 @@ export default async function main(client: Client) {
       }
       telemetry.trackCliSubcommandRun(subcommandOriginal);
       return run(client);
->>>>>>> upstream/main
     case 'update':
       if (needHelp) {
         telemetry.trackCliFlagHelp('env', subcommandOriginal);

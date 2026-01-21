@@ -1,7 +1,5 @@
 # @vercel/next
 
-<<<<<<< HEAD
-=======
 ## 4.15.15
 
 ### Patch Changes
@@ -40,7 +38,6 @@
 
 - Fix experimentalTriggers not applying to Pages Router workflow routes ([#14505](https://github.com/vercel/vercel/pull/14505))
 
->>>>>>> upstream/main
 ## 4.15.9
 
 ### Patch Changes

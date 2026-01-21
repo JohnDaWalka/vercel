@@ -10,10 +10,7 @@ export type EnvRecordsSource =
   | 'vercel-cli:env:rm'
   | 'vercel-cli:env:update'
   | 'vercel-cli:env:pull'
-<<<<<<< HEAD
-=======
   | 'vercel-cli:env:run'
->>>>>>> upstream/main
   | 'vercel-cli:dev'
   | 'vercel-cli:pull'
   | 'vercel-cli:link';
