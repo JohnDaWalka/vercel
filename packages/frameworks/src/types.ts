@@ -223,8 +223,6 @@ export interface Framework {
    * Array of slugs for other framework presets which this framework supersedes.
    */
   supersedes?: string[];
-<<<<<<< HEAD
-=======
   /**
    * Whether the framework is experimental.
    * Experimental frameworks are feature flagged.
@@ -236,5 +234,4 @@ export interface Framework {
    * @example true
    */
   runtimeFramework?: boolean;
->>>>>>> upstream/main
 }

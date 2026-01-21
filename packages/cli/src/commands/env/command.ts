@@ -198,8 +198,6 @@ export const pullSubcommand = {
   ],
 } as const;
 
-<<<<<<< HEAD
-=======
 export const runSubcommand = {
   name: 'run',
   aliases: [],
@@ -244,7 +242,6 @@ export const runSubcommand = {
   ],
 } as const;
 
->>>>>>> upstream/main
 export const updateSubcommand = {
   name: 'update',
   aliases: [],
@@ -317,10 +314,7 @@ export const envCommand = {
     listSubcommand,
     pullSubcommand,
     removeSubcommand,
-<<<<<<< HEAD
-=======
     runSubcommand,
->>>>>>> upstream/main
     updateSubcommand,
   ],
   options: [],

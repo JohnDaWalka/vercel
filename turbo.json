@@ -11,78 +11,6 @@
     "build": {
       "dependsOn": ["^build"],
       "outputLogs": "new-only",
-<<<<<<< HEAD
-      "outputs": ["dist/**"],
-      "cache": true
-    },
-    "vitest-unit": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "vitest-unit-node-24": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "vitest-run": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "vitest-e2e": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "vitest-e2e-node-20": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "test-e2e-node-all-versions": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "test-unit": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "test-dev": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "test-cli": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "test-e2e": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "test-next-local": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "test": {
-      "dependsOn": ["build"],
-      "outputLogs": "new-only",
-      "cache": true
-    },
-    "type-check": {
-      "dependsOn": ["source", "^build"],
-      "cache": true
-    },
-    "source": {
-      "dependsOn": ["^source"],
-      "cache": true
-=======
       "outputs": ["dist/**"]
     },
     "vitest-unit": {
@@ -138,7 +66,6 @@
     },
     "source": {
       "dependsOn": ["^source"]
->>>>>>> upstream/main
     }
   }
 }

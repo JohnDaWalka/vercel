@@ -15,10 +15,7 @@ import {
   FileFsRef,
   normalizePath,
   isBackendFramework,
-<<<<<<< HEAD
-=======
   isPythonFramework,
->>>>>>> upstream/main
 } from '@vercel/build-utils';
 import { isStaticRuntime } from '@vercel/fs-detectors';
 import plural from 'pluralize';
@@ -64,11 +61,7 @@ async function createBuildProcess(
 ): Promise<ChildProcess> {
   output.debug(`Creating build process for "${match.entrypoint}"`);
 
-<<<<<<< HEAD
-  const builderWorkerPath = join(__dirname, 'builder-worker.js');
-=======
   const builderWorkerPath = join(__dirname, 'builder-worker.cjs');
->>>>>>> upstream/main
 
   // Ensure that `node` is in the builder's `PATH`
   const PATH = `${dirname(process.execPath)}${delimiter}${process.env.PATH}`;
@@ -437,29 +430,6 @@ export async function getBuildMatches(
       src = 'package.json';
     }
 
-<<<<<<< HEAD
-    if (
-      buildConfig.config?.framework === 'fastapi' ||
-      buildConfig.config?.framework === 'flask'
-    ) {
-      // Mirror @vercel/python's entrypoint candidates
-      const candidateDirs = ['', 'src', 'app', 'api'];
-      const candidateNames = ['app', 'index', 'server', 'main'];
-      const candidates: string[] = [];
-      for (const name of candidateNames) {
-        for (const dir of candidateDirs) {
-          candidates.push(dir ? `${dir}/${name}.py` : `${name}.py`);
-        }
-      }
-      if (!fileList.includes(src)) {
-        const existing = candidates.filter(p => fileList.includes(p));
-        if (existing.length > 0) {
-          src = existing[0];
-        } else if (fileList.includes('pyproject.toml')) {
-          // Builder will resolve entrypoint from pyproject.toml;
-          src = 'pyproject.toml';
-        }
-=======
     // The Python builder will handle the actual entrypoint discovery, we just need to
     // point it to a manifest file that exists.
     if (
@@ -474,7 +444,6 @@ export async function getBuildMatches(
       const existing = pythonManifestFiles.filter(p => fileList.includes(p));
       if (existing.length > 0) {
         src = existing[0];
->>>>>>> upstream/main
       }
     }
 

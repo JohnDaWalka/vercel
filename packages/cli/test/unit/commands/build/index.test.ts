@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
-=======
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from 'vitest';
->>>>>>> upstream/main
 import fs from 'fs-extra';
 import { join } from 'path';
 import { getWriteableDirectory } from '@vercel/build-utils';
@@ -1108,8 +1104,6 @@ describe.skipIf(flakey)('build', () => {
     ]);
   });
 
-<<<<<<< HEAD
-=======
   it('should fail build when CRON_SECRET contains invalid HTTP header characters', async () => {
     const cwd = fixture('with-cron');
     const output = join(cwd, '.vercel', 'output');
@@ -1195,7 +1189,6 @@ describe.skipIf(flakey)('build', () => {
     }
   });
 
->>>>>>> upstream/main
   it('should merge crons property from build output with vercel.json crons property', async () => {
     const cwd = fixture('with-cron-merge');
     const output = join(cwd, '.vercel', 'output');
@@ -1758,8 +1751,6 @@ describe.skipIf(flakey)('build', () => {
       expect(files.sort()).toEqual(['index.html']);
     });
   });
-<<<<<<< HEAD
-=======
 
   describe('deploymentId validation', () => {
     const staticFixture = fixture('static');
@@ -2115,5 +2106,4 @@ fs.writeFileSync(
       expect(exitCode).toEqual(0);
     });
   });
->>>>>>> upstream/main
 });

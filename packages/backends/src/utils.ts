@@ -4,11 +4,6 @@ import {
   download,
   runNpmInstall,
   runPackageJsonScript,
-<<<<<<< HEAD
-  getNodeVersion,
-  getSpawnOptions,
-=======
->>>>>>> upstream/main
   execCommand,
   getEnvForPackageManager,
   scanParentDirs,
@@ -16,9 +11,6 @@ import {
 } from '@vercel/build-utils';
 import type { BuildV2 } from '@vercel/build-utils';
 
-<<<<<<< HEAD
-export async function downloadInstallAndBundle(args: Parameters<BuildV2>[0]) {
-=======
 export async function downloadInstallAndBundle(
   args: Parameters<BuildV2>[0]
 ): Promise<{
@@ -27,22 +19,10 @@ export async function downloadInstallAndBundle(
   };
   entrypointFsDirname: string;
 }> {
->>>>>>> upstream/main
   const { entrypoint, files, workPath, meta, config, repoRootPath } = args;
   await download(files, workPath, meta);
 
   const entrypointFsDirname = join(workPath, dirname(entrypoint));
-<<<<<<< HEAD
-  const nodeVersion = await getNodeVersion(
-    entrypointFsDirname,
-    undefined,
-    config,
-    meta
-  );
-
-  const spawnOpts = getSpawnOptions(meta || {}, nodeVersion);
-=======
->>>>>>> upstream/main
 
   const {
     cliType,
@@ -51,19 +31,11 @@ export async function downloadInstallAndBundle(
     turboSupportsCorepackHome,
   } = await scanParentDirs(entrypointFsDirname, true, repoRootPath);
 
-<<<<<<< HEAD
-  spawnOpts.env = getEnvForPackageManager({
-    cliType,
-    lockfileVersion,
-    packageJsonPackageManager,
-    env: spawnOpts.env || {},
-=======
   const spawnEnv = getEnvForPackageManager({
     cliType,
     lockfileVersion,
     packageJsonPackageManager,
     env: process.env,
->>>>>>> upstream/main
     turboSupportsCorepackHome,
     projectCreatedAt: config.projectSettings?.createdAt,
   });
@@ -73,11 +45,7 @@ export async function downloadInstallAndBundle(
     if (installCommand.trim()) {
       console.log(`Running "install" command: \`${installCommand}\`...`);
       await execCommand(installCommand, {
-<<<<<<< HEAD
-        ...spawnOpts,
-=======
         env: spawnEnv,
->>>>>>> upstream/main
         cwd: entrypointFsDirname,
       });
     } else {
@@ -87,29 +55,18 @@ export async function downloadInstallAndBundle(
     await runNpmInstall(
       entrypointFsDirname,
       [],
-<<<<<<< HEAD
-      spawnOpts,
-=======
       {
         env: spawnEnv,
       },
->>>>>>> upstream/main
       meta,
       config.projectSettings?.createdAt
     );
   }
-<<<<<<< HEAD
-  return { entrypointFsDirname, nodeVersion, spawnOpts };
-=======
   return { entrypointFsDirname, spawnEnv };
->>>>>>> upstream/main
 }
 
 export async function maybeExecBuildCommand(
   args: Parameters<BuildV2>[0],
-<<<<<<< HEAD
-  options: Awaited<ReturnType<typeof downloadInstallAndBundle>>
-=======
   {
     spawnEnv,
     entrypointFsDirname,
@@ -119,7 +76,6 @@ export async function maybeExecBuildCommand(
     };
     entrypointFsDirname: string;
   }
->>>>>>> upstream/main
 ) {
   const projectBuildCommand = args.config.projectSettings?.buildCommand;
   if (projectBuildCommand) {
@@ -131,20 +87,11 @@ export async function maybeExecBuildCommand(
     });
     const nodeBinPath = nodeBinPaths.join(delimiter);
     const env = {
-<<<<<<< HEAD
-      ...options.spawnOpts.env,
-      PATH: `${nodeBinPath}${delimiter}${options.spawnOpts.env?.PATH || process.env.PATH}`,
-    };
-
-    return execCommand(projectBuildCommand, {
-      ...options.spawnOpts,
-=======
       ...spawnEnv,
       PATH: `${nodeBinPath}${delimiter}${spawnEnv?.PATH || process.env.PATH}`,
     };
 
     return execCommand(projectBuildCommand, {
->>>>>>> upstream/main
       env,
       cwd: args.workPath,
     });
@@ -154,15 +101,9 @@ export async function maybeExecBuildCommand(
   const possibleScripts = ['build'];
 
   return runPackageJsonScript(
-<<<<<<< HEAD
-    options.entrypointFsDirname,
-    possibleScripts,
-    options.spawnOpts,
-=======
     entrypointFsDirname,
     possibleScripts,
     { env: spawnEnv },
->>>>>>> upstream/main
     args.config.projectSettings?.createdAt
   );
 }

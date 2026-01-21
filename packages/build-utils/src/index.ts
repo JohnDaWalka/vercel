@@ -26,10 +26,7 @@ import {
   runPipInstall,
   runShellScript,
   runCustomInstallCommand,
-<<<<<<< HEAD
-=======
   resetCustomInstallCommandSet,
->>>>>>> upstream/main
   getEnvForPackageManager,
   getNodeVersion,
   getPathForPackageManager,
@@ -38,10 +35,7 @@ import {
   getNodeBinPath,
   getNodeBinPaths,
   scanParentDirs,
-<<<<<<< HEAD
-=======
   findPackageJson,
->>>>>>> upstream/main
   traverseUpDirectories,
 } from './fs/run-user-scripts';
 import {
@@ -93,10 +87,7 @@ export {
   runPipInstall,
   runShellScript,
   runCustomInstallCommand,
-<<<<<<< HEAD
-=======
   resetCustomInstallCommandSet,
->>>>>>> upstream/main
   getEnvForPackageManager,
   getNodeVersion,
   getPathForPackageManager,
@@ -112,10 +103,7 @@ export {
   isDirectory,
   getLambdaOptionsFromFunction,
   scanParentDirs,
-<<<<<<< HEAD
-=======
   findPackageJson,
->>>>>>> upstream/main
   getIgnoreFilter,
   cloneEnv,
   hardLinkDir,
@@ -124,11 +112,7 @@ export {
 };
 
 export { EdgeFunction } from './edge-function';
-<<<<<<< HEAD
-export { readConfigFile } from './fs/read-config-file';
-=======
 export { readConfigFile, getPackageJson } from './fs/read-config-file';
->>>>>>> upstream/main
 export { normalizePath } from './fs/normalize-path';
 export { getOsRelease, getProvidedRuntime } from './os';
 
@@ -155,12 +139,9 @@ export {
   isExperimentalBackendsEnabled,
   isExperimentalBackendsWithoutIntrospectionEnabled,
   shouldUseExperimentalBackends,
-<<<<<<< HEAD
-=======
   PYTHON_FRAMEWORKS,
   PythonFramework,
   isPythonFramework,
->>>>>>> upstream/main
 } from './framework-helpers';
 
 export * from './python';
