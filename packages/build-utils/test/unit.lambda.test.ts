@@ -373,6 +373,39 @@ describe('Lambda', () => {
       expect(lambda.runtimeLanguage).toBe('rust');
     });
 
+    it('should create Lambda with valid runtimeLanguage (go)', () => {
+      const files: Files = {};
+      const lambda = new Lambda({
+        files,
+        handler: 'index.handler',
+        runtime: 'provided.al2',
+        runtimeLanguage: 'go',
+      });
+
+      expect(lambda.runtimeLanguage).toBe('go');
+    });
+
+    it('should create Lambda without runtimeLanguage', () => {
+      const files: Files = {};
+      const lambda = new Lambda({
+        files,
+        handler: 'index.handler',
+        runtime: 'nodejs22.x',
+      });
+
+      expect(lambda.runtimeLanguage).toBeUndefined();
+    });
+
+    it('should throw error for invalid runtimeLanguage (python)', () => {
+      const files: Files = {};
+      expect(
+        () =>
+          new Lambda({
+            files,
+            handler: 'index.handler',
+            runtime: 'provided.al2',
+            runtimeLanguage: 'python' as any,
+          })
       ).toThrow('"runtimeLanguage" is invalid. Valid options: "rust", "go"');
     });
 

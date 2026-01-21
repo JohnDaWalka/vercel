@@ -2123,14 +2123,7 @@ export const frameworks = [
     description:
       'A library for writing fast and scalable Starlette-powered web applications',
     website: 'https://fastht.ml',
-    name: 'Koa',
-    slug: 'koa',
-    logo: 'https://api-frameworks.vercel.sh/framework-logos/koa.svg',
-    tagline: 'Expressive middleware for Node.js using ES2017 async functions',
-    description:
-      'Koa is a new web framework designed by the team behind Express, which aims to be a smaller, more expressive, and more robust foundation for web applications and APIs.',
-    website: 'https://koajs.com',
-    useRuntime: { src: 'index.js', use: '@vercel/koa' },
+    useRuntime: { src: 'index.py', use: '@vercel/python' },
     defaultRoutes: [
       {
         handle: 'filesystem',

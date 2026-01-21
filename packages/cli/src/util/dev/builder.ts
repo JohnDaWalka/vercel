@@ -15,6 +15,52 @@ import {
   FileFsRef,
   normalizePath,
   isBackendFramework,
+  isPythonFramework,
+} from '@vercel/build-utils';
+import { isStaticRuntime } from '@vercel/fs-detectors';
+import plural from 'pluralize';
+import minimatch from 'minimatch';
+
+import highlight from '../output/highlight';
+import { treeKill } from '../tree-kill';
+import { relative } from '../path-helpers';
+import { LambdaSizeExceededError } from '../errors-ts';
+
+import type DevServer from './server';
+import type {
+  VercelConfig,
+  BuildMatch,
+  BuildResult,
+  BuilderInputs,
+  BuilderOutput,
+  BuildResultV3,
+  BuilderOutputs,
+  EnvConfigs,
+  BuiltLambda,
+} from './types';
+import { normalizeRoutes } from '@vercel/routing-utils';
+import getUpdateCommand from '../get-update-command';
+import { getTitleName } from '../pkg-name';
+import { importBuilders } from '../build/import-builders';
+import output from '../../output-manager';
+
+interface BuildMessage {
+  type: string;
+}
+
+interface BuildMessageResult extends BuildMessage {
+  type: 'buildResult';
+  result?: BuilderOutputs | BuildResult;
+  error?: object;
+}
+
+async function createBuildProcess(
+  match: BuildMatch,
+  envConfigs: EnvConfigs,
+  workPath: string
+): Promise<ChildProcess> {
+  output.debug(`Creating build process for "${match.entrypoint}"`);
+
   const builderWorkerPath = join(__dirname, 'builder-worker.cjs');
 
   // Ensure that `node` is in the builder's `PATH`

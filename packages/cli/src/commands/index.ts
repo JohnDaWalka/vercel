@@ -36,6 +36,51 @@ import { rollingReleaseCommand } from './rolling-release/command';
 import { targetCommand } from './target/command';
 import { teamsCommand } from './teams/command';
 import { telemetryCommand } from './telemetry/command';
+import { upgradeCommand } from './upgrade/command';
+import { whoamiCommand } from './whoami/command';
+import { blobCommand } from './blob/command';
+import type { Command } from './help';
+import output from '../output-manager';
+
+const commandsStructs = [
+  aliasCommand,
+  blobCommand,
+  bisectCommand,
+  buildCommand,
+  cacheCommand,
+  certsCommand,
+  curlCommand,
+  deployCommand,
+  devCommand,
+  dnsCommand,
+  domainsCommand,
+  envCommand,
+  gitCommand,
+  httpstatCommand,
+  initCommand,
+  inspectCommand,
+  installCommand,
+  integrationCommand,
+  integrationResourceCommand,
+  linkCommand,
+  listCommand,
+  loginCommand,
+  logoutCommand,
+  logsCommand,
+  mcpCommand,
+  microfrontendsCommand,
+  openCommand,
+  projectCommand,
+  promoteCommand,
+  pullCommand,
+  redeployCommand,
+  redirectsCommand,
+  removeCommand,
+  rollbackCommand,
+  rollingReleaseCommand,
+  targetCommand,
+  teamsCommand,
+  telemetryCommand,
   upgradeCommand,
   whoamiCommand,
   // added because we don't have a full help command

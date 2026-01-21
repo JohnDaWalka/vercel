@@ -12,6 +12,202 @@ import {
   runNpmInstall,
   runPackageJsonScript,
   scanParentDirs,
+  findPackageJson,
+  Prerender,
+} from '../src';
+import type { Files } from '../src';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+vi.setConfig({ testTimeout: 10 * 1000 });
+
+async function expectBuilderError(promise: Promise<any>, pattern: string) {
+  let result;
+  try {
+    result = await promise;
+  } catch (error) {
+    result = error;
+  }
+  assert('message' in result, `Expected error message but found ${result}`);
+  assert(
+    typeof result.message === 'string',
+    `Expected error to be a string but found ${typeof result.message}`
+  );
+  assert(
+    result.message.includes(pattern),
+    `Expected ${pattern} but found "${result.message}"`
+  );
+}
+
+let warningMessages: string[];
+const originalConsoleWarn = console.warn;
+beforeEach(() => {
+  warningMessages = [];
+  console.warn = m => {
+    warningMessages.push(m);
+  };
+});
+
+afterEach(() => {
+  console.warn = originalConsoleWarn;
+});
+
+it('should only match supported node versions, otherwise throw an error', async () => {
+  expect(await getSupportedNodeVersion('22.x', false)).toHaveProperty(
+    'major',
+    22
+  );
+
+  const autoMessage =
+    'Please set Node.js Version to 24.x in your Project Settings to use Node.js 24.';
+  await expectBuilderError(
+    getSupportedNodeVersion('8.11.x', true),
+    autoMessage
+  );
+  await expectBuilderError(getSupportedNodeVersion('6.x', true), autoMessage);
+  await expectBuilderError(getSupportedNodeVersion('999.x', true), autoMessage);
+  await expectBuilderError(getSupportedNodeVersion('foo', true), autoMessage);
+  await expectBuilderError(getSupportedNodeVersion('=> 10', true), autoMessage);
+  await expectBuilderError(
+    getSupportedNodeVersion('=> 16.x', true),
+    autoMessage
+  );
+
+  expect(await getSupportedNodeVersion('22.x', true)).toHaveProperty(
+    'major',
+    22
+  );
+
+  const foundMessage =
+    'Please set "engines": { "node": "24.x" } in your `package.json` file to use Node.js 24.';
+  await expectBuilderError(
+    getSupportedNodeVersion('8.11.x', false),
+    foundMessage
+  );
+  await expectBuilderError(getSupportedNodeVersion('6.x', false), foundMessage);
+  await expectBuilderError(
+    getSupportedNodeVersion('999.x', false),
+    foundMessage
+  );
+  await expectBuilderError(getSupportedNodeVersion('foo', false), foundMessage);
+  await expectBuilderError(
+    getSupportedNodeVersion('=> 10', false),
+    foundMessage
+  );
+});
+
+// https://linear.app/vercel/issue/ZERO-3238/unskip-tests-failing-due-to-node-16-removal
+// eslint-disable-next-line jest/no-disabled-tests
+it.skip('should match all semver ranges', async () => {
+  // See https://docs.npmjs.com/files/package.json#engines
+  expect(await getSupportedNodeVersion('16.0.0')).toHaveProperty('major', 16);
+  expect(await getSupportedNodeVersion('16.x')).toHaveProperty('major', 16);
+  expect(await getSupportedNodeVersion('>=10')).toHaveProperty('major', 22);
+  expect(await getSupportedNodeVersion('>=10.3.0')).toHaveProperty('major', 22);
+  expect(await getSupportedNodeVersion('16.5.0 - 16.9.0')).toHaveProperty(
+    'major',
+    16
+  );
+  expect(await getSupportedNodeVersion('>=9.5.0 <=16.5.0')).toHaveProperty(
+    'major',
+    16
+  );
+  expect(await getSupportedNodeVersion('~16.5.0')).toHaveProperty('major', 16);
+  expect(await getSupportedNodeVersion('^16.5.0')).toHaveProperty('major', 16);
+  expect(await getSupportedNodeVersion('16.5.0 - 16.20.0')).toHaveProperty(
+    'major',
+    16
+  );
+});
+
+it('should allow nodejs20.x', async () => {
+  expect(await getSupportedNodeVersion('20.x')).toHaveProperty('major', 20);
+  expect(await getSupportedNodeVersion('20')).toHaveProperty('major', 20);
+  expect(await getSupportedNodeVersion('20.1.0')).toHaveProperty('major', 20);
+});
+
+it('should allow nodejs22.x', async () => {
+  expect(await getSupportedNodeVersion('22.x')).toHaveProperty('major', 22);
+  expect(await getSupportedNodeVersion('22')).toHaveProperty('major', 22);
+  expect(await getSupportedNodeVersion('22.1.0')).toHaveProperty('major', 22);
+});
+
+it('should only nodejs24.x', async () => {
+  expect(await getSupportedNodeVersion('24.x')).toHaveProperty('major', 24);
+  expect(await getSupportedNodeVersion('24')).toHaveProperty('major', 24);
+  expect(await getSupportedNodeVersion('24.3.0')).toHaveProperty('major', 24);
+  expect(await getSupportedNodeVersion('>=24')).toHaveProperty('major', 24);
+});
+
+it('should not allow nodejs18.x when not available', async () => {
+  // Simulates AL2023 build-container
+  await expect(getSupportedNodeVersion('18.x', true, [20])).rejects.toThrow(
+    'Found invalid Node.js Version: "18.x". Please set Node.js Version to 20.x in your Project Settings to use Node.js 20.'
+  );
+});
+
+it('should ignore node version in vercel dev getNodeVersion()', async () => {
+  expect(
+    await getNodeVersion(
+      '/tmp',
+      undefined,
+      { nodeVersion: '1' },
+      { isDev: true }
+    )
+  ).toHaveProperty('runtime', 'nodejs');
+});
+
+it('should resolve to the provided bunVersion when its valid', async () => {
+  await expect(
+    getNodeVersion('/tmp', undefined, { bunVersion: '1.x' }, { isDev: false })
+  ).resolves.toHaveProperty('runtime', 'bun1.x');
+});
+
+it('should resolve to the provided bunVersion on dev', async () => {
+  await expect(
+    getNodeVersion('/tmp', undefined, { bunVersion: '1.x' }, { isDev: true })
+  ).resolves.toHaveProperty('runtime', 'bun1.x');
+});
+
+it('should fail if the provided bun version is not valid', async () => {
+  await expect(
+    getNodeVersion(
+      '/tmp',
+      undefined,
+      { bunVersion: 'bun1.x' },
+      { isDev: false }
+    )
+  ).rejects.toThrow();
+});
+
+it('should select project setting from config when no package.json is found and fallback undefined', async () => {
+  expect(
+    await getNodeVersion('/tmp', undefined, { nodeVersion: '22.x' }, {})
+  ).toHaveProperty('range', '22.x');
+  expect(warningMessages).toStrictEqual([]);
+});
+
+it('should select project setting from config when no package.json is found and fallback is null', async () => {
+  expect(
+    await getNodeVersion('/tmp', null as any, { nodeVersion: '22.x' }, {})
+  ).toHaveProperty('range', '22.x');
+  expect(warningMessages).toStrictEqual([]);
+});
+
+it('should select project setting from fallback when no package.json is found', async () => {
+  expect(await getNodeVersion('/tmp', '22.x')).toHaveProperty('range', '22.x');
+  expect(warningMessages).toStrictEqual([]);
+});
+
+it('should prefer package.json engines over project setting from config and warn', async () => {
+  expect(
+    await getNodeVersion(
+      path.join(__dirname, 'pkg-engine-node'),
+      undefined,
+      { nodeVersion: '12.x' },
+      {}
+    )
+  ).toHaveProperty('range', '22.x');
+  expect(warningMessages).toStrictEqual([
     'Warning: Due to "engines": { "node": "22.x" } in your `package.json` file, the Node.js Version defined in your Project Settings ("12.x") will not apply, Node.js Version "22.x" will be used instead. Learn More: https://vercel.link/node-version',
   ]);
 });

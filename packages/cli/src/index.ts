@@ -412,6 +412,208 @@ const main = async () => {
     'init',
     'build',
     'telemetry',
+    'upgrade',
+  ];
+
+  if (process.env.FF_GUIDANCE_MODE) {
+    subcommandsWithoutToken.push('guidance');
+  }
+
+  // Prompt for login if there is no current token
+  if (
+    (!authConfig || !authConfig.token) &&
+    !client.argv.includes('-h') &&
+    !client.argv.includes('--help') &&
+    !parsedArgs.flags['--token'] &&
+    subcommand &&
+    !subcommandsWithoutToken.includes(subcommand)
+  ) {
+    if (isTTY) {
+      output.log(`No existing credentials found. Please log in:`);
+      try {
+        const result = await login(client, { shouldParseArgs: false });
+        // The login function failed, so it returned an exit code
+        if (result !== 0) return result;
+      } catch (error) {
+        printError(error);
+        return 1;
+      }
+
+      output.debug(`Saved credentials in "${hp(VERCEL_DIR)}"`);
+    } else {
+      output.prettyError({
+        message:
+          'No existing credentials found. Please run ' +
+          `${getCommandName('login')} or pass ${param('--token')}`,
+        link: 'https://err.sh/vercel/no-credentials-found',
+      });
+      return 1;
+    }
+  }
+
+  if (
+    typeof parsedArgs.flags['--token'] === 'string' &&
+    subcommand === 'switch'
+  ) {
+    output.prettyError({
+      message: `This command doesn't work with ${param(
+        '--token'
+      )}. Please use ${param('--scope')}.`,
+      link: 'https://err.sh/vercel/no-token-allowed',
+    });
+
+    return 1;
+  }
+
+  if (typeof parsedArgs.flags['--token'] === 'string') {
+    const token: string = parsedArgs.flags['--token'];
+
+    if (token.length === 0) {
+      output.prettyError({
+        message: `You defined ${param('--token')}, but it's missing a value`,
+        link: 'https://err.sh/vercel/missing-token-value',
+      });
+
+      return 1;
+    }
+
+    const invalid = token.match(/(\W)/g);
+    if (invalid) {
+      const notContain = Array.from(new Set(invalid)).sort();
+      output.prettyError({
+        message: `You defined ${param(
+          '--token'
+        )}, but its contents are invalid. Must not contain: ${notContain
+          .map(c => JSON.stringify(c))
+          .join(', ')}`,
+        link: 'https://err.sh/vercel/invalid-token-value',
+      });
+
+      return 1;
+    }
+
+    client.authConfig = { token, skipWrite: true };
+
+    // Don't use team from config if `--token` was set
+    if (client.config && client.config.currentTeam) {
+      delete client.config.currentTeam;
+    }
+  }
+
+  if (parsedArgs.flags['--team']) {
+    output.warn(
+      `The ${param('--team')} option is deprecated. Please use ${param(
+        '--scope'
+      )} instead.`
+    );
+  }
+
+  let targetCommand =
+    typeof subcommand === 'string' ? commands.get(subcommand) : undefined;
+  const scope =
+    parsedArgs.flags['--scope'] ||
+    parsedArgs.flags['--team'] ||
+    localConfig?.scope;
+
+  if (
+    typeof scope === 'string' &&
+    targetCommand !== 'login' &&
+    targetCommand !== 'build' &&
+    !(targetCommand === 'teams' && subSubCommand !== 'invite')
+  ) {
+    let user = null;
+
+    try {
+      user = await getUser(client);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        output.debug(err.stack || err.toString());
+      }
+
+      if (isErrnoException(err) && err.code === 'NOT_AUTHORIZED') {
+        output.prettyError({
+          message: `You do not have access to the specified account`,
+          link: 'https://err.sh/vercel/scope-not-accessible',
+        });
+
+        return 1;
+      }
+
+      output.error(
+        `Not able to load user because of unexpected error: ${errorToString(err)}`
+      );
+      return 1;
+    }
+
+    if (user.id === scope || user.email === scope || user.username === scope) {
+      if (user.version === 'northstar') {
+        output.error('You cannot set your Personal Account as the scope.');
+        return 1;
+      }
+
+      delete client.config.currentTeam;
+    } else {
+      let teams = [];
+
+      try {
+        teams = await getTeams(client);
+      } catch (err: unknown) {
+        if (isErrnoException(err) && err.code === 'not_authorized') {
+          output.prettyError({
+            message: `You do not have access to the specified team`,
+            link: 'https://err.sh/vercel/scope-not-accessible',
+          });
+
+          return 1;
+        }
+
+        if (isErrnoException(err) && err.code === 'rate_limited') {
+          output.prettyError({
+            message:
+              'Rate limited. Too many requests to the same endpoint: /teams',
+          });
+
+          return 1;
+        }
+
+        output.error('Not able to load teams');
+        return 1;
+      }
+
+      const related =
+        teams && teams.find(team => team.id === scope || team.slug === scope);
+
+      if (!related) {
+        output.prettyError({
+          message: 'The specified scope does not exist',
+          link: 'https://err.sh/vercel/scope-not-existent',
+        });
+
+        return 1;
+      }
+
+      client.config.currentTeam = related.id;
+    }
+  }
+
+  let exitCode;
+
+  try {
+    if (!targetCommand) {
+      // Set this for the metrics to record it at the end
+      targetCommand = parsedArgs.args[2];
+
+      // Try to execute as an extension
+      try {
+        exitCode = await execExtension(
+          client,
+          targetCommand,
+          parsedArgs.args.slice(3),
+          cwd
+        );
+        telemetry.trackCliExtension();
+      } catch (err: unknown) {
+        if (isErrnoException(err) && err.code === 'ENOENT') {
           // Check if the user made a typo before falling back to deploy
           if (
             handleCommandTypo({
@@ -598,6 +800,20 @@ const main = async () => {
           telemetry.trackCliCommandTelemetry(userSuppliedSubCommand);
           func = require('./commands/telemetry').default;
           break;
+        case 'upgrade':
+          telemetry.trackCliCommandUpgrade(userSuppliedSubCommand);
+          func = require('./commands/upgrade').default;
+          break;
+        case 'whoami':
+          telemetry.trackCliCommandWhoami(userSuppliedSubCommand);
+          func = require('./commands/whoami').default;
+          break;
+        default:
+          func = null;
+          break;
+      }
+
+      if (!func || !targetCommand) {
         if (
           !handleCommandTypo({
             command: subcommand,
