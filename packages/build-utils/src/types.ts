@@ -408,6 +408,7 @@ export interface ProjectSettings {
   outputDirectory?: string | null;
   rootDirectory?: string | null;
   nodeVersion?: string;
+  monorepoManager?: string | null;
   createdAt?: number;
   autoExposeSystemEnvs?: boolean;
   sourceFilesOutsideRootDirectory?: boolean;
@@ -546,6 +547,14 @@ export interface BuildResultV2Typical {
     version: string;
   };
   flags?: { definitions: FlagDefinitions };
+  /**
+   * User-configured deployment ID for skew protection.
+   * This allows users to specify a custom deployment identifier
+   * in their next.config.js that will be used for version skew protection
+   * with pre-built deployments.
+   * @example "abc123"
+   */
+  deploymentId?: string;
 }
 
 export type BuildResultV2 = BuildResultV2Typical | BuildResultBuildOutput;
@@ -642,3 +651,71 @@ export interface TriggerEvent {
    */
   initialDelaySeconds?: number;
 }
+
+export type ServiceRuntime = 'node' | 'python' | 'go' | 'rust' | 'ruby';
+
+export type ServiceType = 'web' | 'cron' | 'worker';
+
+/**
+ * Configuration for a service in vercel.json.
+ * @experimental This feature is experimental and may change.
+ */
+export interface ExperimentalServiceConfig {
+  type?: ServiceType;
+  /**
+   * Entry file for the service, relative to the workspace directory.
+   * @example "src/index.ts", "main.py", "api/server.go"
+   */
+  entrypoint?: string;
+  /**
+   * Path to the directory containing the service's manifest file
+   * (package.json, pyproject.toml, etc.).
+   * Defaults to "." (project root) if not specified.
+   */
+  workspace?: string;
+
+  /** Framework to use */
+  framework?: string;
+  /** Builder to use, e.g. @vercel/node, @vercel/python */
+  builder?: string;
+  /** Specific lambda runtime to use, e.g. nodejs24.x, python3.14 */
+  runtime?: string;
+
+  buildCommand?: string;
+  installCommand?: string;
+
+  /** Lambda config */
+  memory?: number;
+  maxDuration?: number;
+  includeFiles?: string | string[];
+  excludeFiles?: string | string[];
+
+  /* Web service config */
+  /** URL prefix for routing */
+  routePrefix?: string;
+
+  /* Cron service config */
+  /** Cron schedule expression (e.g., "0 0 * * *") */
+  schedule?: string;
+
+  /* Worker service config */
+  topic?: string;
+  consumer?: string;
+}
+
+/**
+ * Map of service name to service configuration.
+ * @experimental This feature is experimental and may change.
+ */
+export type ExperimentalServices = Record<string, ExperimentalServiceConfig>;
+
+/**
+ * Map of service group name to array of service names belonging to that group.
+ * @experimental This feature is experimental and may change.
+ * @example
+ * {
+ *   "app": ["site", "backend"],
+ *   "admin": ["admin", "backend"]
+ * }
+ */
+export type ExperimentalServiceGroups = Record<string, string[]>;
