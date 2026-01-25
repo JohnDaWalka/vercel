@@ -7,8 +7,16 @@ evalScript.esm = code => evalScript(code, ['--input-type', 'module']);
 
 describe('@vercel/functions', () => {
   const EXPECTED_METHODS = [
+    'addCacheTag',
+    'attachDatabasePool',
+    'dangerouslyDeleteBySrcImage',
+    'dangerouslyDeleteByTag',
+    'experimental_attachDatabasePool',
     'geolocation',
+    'getCache',
     'getEnv',
+    'invalidateBySrcImage',
+    'invalidateByTag',
     'ipAddress',
     'next',
     'rewrite',
@@ -39,6 +47,8 @@ describe('@vercel/functions/oidc', () => {
     'awsCredentialsProvider',
     'getVercelOidcToken',
     'getVercelOidcTokenSync',
+    'signAwsRequest',
+    'signAwsRequestWithProvider',
   ];
 
   test('load as CommonJS', async () => {
