@@ -41,7 +41,7 @@ const apiKey = generateRandomString(64);
 import { hash } from '@vercel/cryptography';
 
 // Generate SHA-256 hash (hex encoding by default)
-const hashedPassword = hash('user-password');
+const contentHash = hash('important-data');
 
 // Use base64 encoding
 const hashedData = hash('data', 'base64');

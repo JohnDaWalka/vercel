@@ -76,8 +76,9 @@ export function constantTimeCompare(a: string, b: string): boolean {
   const bufferA = Buffer.from(a);
   const bufferB = Buffer.from(b);
 
-  // If lengths differ, compare dummy buffers of same length
-  // to maintain constant time
+  // If lengths differ, return false early.
+  // Note: Length comparison is not constant-time, but this is
+  // generally acceptable as string length is often public information.
   if (bufferA.length !== bufferB.length) {
     return false;
   }

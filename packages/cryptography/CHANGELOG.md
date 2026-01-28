@@ -2,7 +2,7 @@
 
 ## 1.0.0
 
-### Minor Changes
+### Initial Release
 
 - Initial release of @vercel/cryptography module with secure cryptographic utilities including:
   - Random string generation
